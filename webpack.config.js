@@ -7,6 +7,12 @@ const webpack = require('webpack');
 module.exports = {
     entry: {
         'index': ['./static/js/page/index/index.js'],//首页
+        'login': ['./static/js/page/login/login.js'],//登陆
+        'register': ['./static/js/page/register/register.js'],//注册
+        'companyinfo': ['./static/js/page/companyinfo/companyinfo.js'],//公司信息
+        'management': ['./static/js/page/management/management.js'],//信息管理
+        'mine': ['./static/js/page/mine/mine.js'],//我的
+        'binding': ['./static/js/page/binding/binding.js'],//微信绑定
     },
     output: {
         //path: path.resolve(__dirname, 'dist'),

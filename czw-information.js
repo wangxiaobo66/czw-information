@@ -12,7 +12,13 @@ var path = require('path');
 var staticCache = require('koa-static-cache');//静态文件
 
 //页面配置
-router.get('/',routerController.index);//首页
+router.get('/',routerController.index);//首页测试用
+router.get('/login',routerController.login);//登陆
+router.get('/register',routerController.register);//注册
+router.get('/companyinfo',routerController.companyinfo);//公司信息
+router.get('/management',routerController.management);//信息管理
+router.get('/mine',routerController.mine);//我的
+router.get('/binding',routerController.binding);//微信绑定
 
 //接口配置
 router.post('/upload',koaBody,czwInformationController.upload);//上传图片接口

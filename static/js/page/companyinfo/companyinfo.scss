@@ -1,0 +1,135 @@
+.module-companyinfo{
+  html,body {
+    height: 100%;
+  }
+  .status {
+    border: solid 1px #999;
+    appearance:none;
+    -webkit-appearance:none;
+    width: 7.3333333333rem;
+    height: 0.6666666667rem;
+    line-height: 0.6666666667rem;
+    padding: 0 0.2666666667rem;
+    position: relative;
+    color: #999;
+    margin-left: .1rem;
+    font-size: 0.3733333333rem;
+    background: url(/img/arrow.jpg)no-repeat scroll 96% center transparent;
+    background-size: 0.32rem 0.1733333333rem;
+  }
+  .status option {
+    font-size: 0.3466666667rem;
+  }
+  .Company {
+    display: block;
+    background-color: #efefef;
+    height: 100%;
+  }
+  .Company .list {
+    width: 100%;
+    height: 1.3333333333rem;
+    line-height: 1.3333333333rem;
+    padding: 0 0.5333333333rem;
+    background-color: #fff;
+    margin-bottom: 0.2666666667rem;
+    position: relative;
+  }
+  .Company .list span {
+    font-size: 0.3466666667rem;
+  }
+  .un-id{
+    color: #ff0000;
+    float: left;
+    margin-left: .1rem;
+  }
+  .Company .list .btn-small {
+    background-color: #ffc600;
+    color: #333;
+    width: 1.3333333333rem;
+    height: 0.5333333333rem;
+    line-height: 0.5333333333rem;
+    margin-top: 0.4rem;
+    font-size: 0.2933333333rem;
+    float: right;
+  }
+  .Company .list.xinyong {
+    line-height: normal;
+    padding-top: 0.2933333333rem;
+  }
+  .Company .list span.ph {
+    float: left;
+    font-size: 0.2933333333rem;
+    color: #999;
+    margin-top: .05rem;
+  }
+  .checkbox {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0.3466666667rem;
+    height: 0.3466666667rem;
+    border-radius: 100%;
+    background-color: #ffc600;
+    margin: 0.4933333333rem 0.56rem;
+  }
+  .curr .checkbox::after {
+    content: "";
+    display: block;
+    width: 0.1333333333rem;
+    height: 0.1333333333rem;
+    border-radius: 100%;
+    background-color: #fff;
+    margin: 0.1066666667rem;
+  }
+  .in-load .item::after {
+    content: " (已上传)";
+    color: #ff0000;
+  }
+  .in-load .btn::after {
+    content: "重新上传";
+  }
+  .un-load .item::after {
+    content: " (未上传)";
+    color: #ff0000;
+  }
+  .un-load .btn::after {
+    content: "上传"
+  }
+  .file-upload {
+    display: inline-block;
+    width: 4.0rem;
+    height: 0.6666666667rem;
+    line-height: 0.6666666667rem;
+    border-radius: 0.0666666667rem;
+    border:1px solid #999;
+    overflow: hidden;
+    padding-left: 0.2666666667rem;
+    margin: 0.3333333333rem auto auto 0.2666666667rem;
+    color: #999;
+    font-size: 0.3733333333rem;
+  }
+
+  .fl {
+    float: left;
+  }
+  .oh {
+    display: inline-block;
+    padding-left: .2rem;
+    max-width: 4。2rem;
+    text-overflow : ellipsis;
+    white-space : nowrap;
+    overflow : hidden;
+    float: left;
+  }
+  .btn-upload {
+    position: relative;
+  }
+  .btn-upload input{
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.4666666667rem;
+    height: 0.5333333333rem;
+  }
+}
