@@ -25,6 +25,7 @@ class Index extends React.Component {
                 <h1>图片上传</h1>
                 <input type="file" onChange={(e) => this.IMGchange(e)}/>
                 <img src={this.state.imgOne}/>
+                <input type="file" onChange={(e) => this.change(e)}/>
             </div>
         )
     }
@@ -37,11 +38,13 @@ class Index extends React.Component {
         let _this = this;
         let xmlhttp = new XMLHttpRequest();
         let formData = new FormData();
+
         if (!e.target.value) {
             return false
         } else {
             console.log(e.target.files);
             formData.append('watermarkImg', e.target.files[0]);
+            console.log(formData);
             fetch('/upload', {
                 method: 'POST',
                 headers: {

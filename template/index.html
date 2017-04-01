@@ -6,23 +6,16 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="format-detection" content="telephone=no, address=no">
+    <script src="//cdn.bootcss.com/react/15.3.1/react.min.js"></script>
+    <script src="//cdn.bootcss.com/react/15.3.1/react-dom.min.js"></script>
+    <script src="//cdn.bootcss.com/redux/3.6.0/redux.min.js"></script>
+    <script src="//cdn.bootcss.com/react-redux/5.0.0-beta.1/react-redux.min.js"></script>
+
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <title>测试</title>
 </head>
 <body>
-<div class="glyphicon glyphicon-chevron-up"></div>
 <div id="index"></div>
 </body>
-<script type="text/javascript">
-$(function(){
-    $('.glyphicon').on('click',function(){
-        if($(this).hasClass('glyphicon-chevron-up')){
-            $(this).removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
-        }
-        else{
-            $(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
-        }
-    })
-})
-</script>
+<script src="/js/index.js"></script>
 </html>

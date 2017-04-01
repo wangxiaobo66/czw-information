@@ -7,7 +7,16 @@ const scp = require('gulp-scp2');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const webpack = require('gulp-webpack');
+const rev = require('gulp-rev');
 const webpackConfig = require('./webpack.config.js');
+
+/*向服务器提交*/
+var host = '139.198.1.219',
+    username = 'misoar',
+    password = 'vYwme_kitjpiqmqrclemc6kqccSysn1k',
+    dest = '/app/czw-information',
+    port = 22004;
+/**/
 
 gulp.task('distJs', function () {
     'use strict';
@@ -61,3 +70,18 @@ gulp.task('distFont',function (){
 });
 
 gulp.task('appText', ['distJs', 'distImg','distThird','distHtml','distCss','distFont']);
+
+gulp.task('server',function(){
+    'use strict';
+    return gulp.src('./dist/**/*','./controller/*','./czw-information.js','./package.json')
+        .pipe(scp({
+            host: host,
+            username: username,
+            password: password,
+            dest: dest,
+            port:port
+        }))
+        .on('error', function(err) {
+            console.log(err);
+        });
+});
