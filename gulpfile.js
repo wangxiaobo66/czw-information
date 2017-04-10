@@ -9,7 +9,8 @@ const uglify = require('gulp-uglify');
 const webpack = require('gulp-webpack');
 const rev = require('gulp-rev');
 const webpackConfig = require('./webpack.config.js');
-
+//图片路径
+const imgPath = '/data/upload';
 /*向服务器提交*/
 var host = '139.198.1.219',
     username = 'misoar',
