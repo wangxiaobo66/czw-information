@@ -5,8 +5,10 @@ var formParse = require('co-busboy');
 var fetch = require('node-fetch');
 var fs = require('fs');
 var path = require('path');
+var server = 'http://127.0.0.1:9100';
 
 module.exports = {
+    //测试
     upload:function *(next){
         var parts = formParse(this.request);
         var part;
@@ -33,5 +35,6 @@ module.exports = {
         var name = url.substring(url.indexOf('?')+1,url.length);
         var img = fs.readFileSync('static/img/'+name);
         this.body = img;
-    }
+    },
+    //开调
 };
