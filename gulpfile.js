@@ -18,7 +18,9 @@ var host = '139.198.1.219',
     dest = '/app/czw-information',
     port = 22004;
 /**/
-
+/**
+ * 图片存储路径/data/upload
+ */
 gulp.task('distJs', function () {
     'use strict';
     return gulp.src('./static/js/page/**/*.js')
@@ -74,7 +76,7 @@ gulp.task('appText', ['distJs', 'distImg','distThird','distHtml','distCss','dist
 
 gulp.task('server',function(){
     'use strict';
-    return gulp.src('./dist/**/*','./controller/*','./czw-information.js','./package.json')
+    return gulp.src(['./dist/**/*','./controller/*','czw-information.js','package.json'])
         .pipe(scp({
             host: host,
             username: username,
