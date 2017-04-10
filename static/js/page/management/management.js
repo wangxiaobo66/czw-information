@@ -62,6 +62,7 @@ class Management extends React.Component {
                             </p>
                             <div className="flex-row-around">
                                 <div className="btn btn-y">查看</div>
+                                <div className="btn btn-w">取消关联</div>
                             </div>
                         </li>
                     </ul>
