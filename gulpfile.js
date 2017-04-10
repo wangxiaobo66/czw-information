@@ -18,9 +18,6 @@ var host = '139.198.1.219',
     dest = '/app/czw-information',
     port = 22004;
 /**/
-/**
- * 图片存储路径/data/upload
- */
 gulp.task('distJs', function () {
     'use strict';
     return gulp.src('./static/js/page/**/*.js')
