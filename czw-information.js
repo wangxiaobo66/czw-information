@@ -21,8 +21,12 @@ router.get('/mine',routerController.mine);//我的
 router.get('/binding',routerController.binding);//微信绑定
 
 //接口配置
+//测试
 router.post('/upload',koaBody,czwInformationController.upload);//上传图片接口
 router.get('/img',czwInformationController.img);//预览图片接口
+//开整
+//获取用户信息
+
 
 app
     .use(router.routes())

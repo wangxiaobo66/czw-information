@@ -6,6 +6,7 @@ var fetch = require('node-fetch');
 var fs = require('fs');
 var path = require('path');
 var server = 'http://127.0.0.1:9100';
+var WXFBSESSIONID = 'oGx7pt8VmTwCQ9ghpCyE9DLua-fE';
 
 module.exports = {
     //测试
@@ -37,4 +38,5 @@ module.exports = {
         this.body = img;
     },
     //开调
+
 };
