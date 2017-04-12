@@ -25,7 +25,11 @@ router.get('/binding',routerController.binding);//微信绑定
 router.post('/upload',koaBody,czwInformationController.upload);//上传图片接口
 router.get('/img',czwInformationController.img);//预览图片接口
 //开整
-//获取用户信息
+
+router.post('/getUser',koaBody,czwInformationController.getUser);//获取用户信息
+router.post('/userQuery',koaBody,czwInformationController.userQuery);//查询采招网账户是否可用
+router.post('/register',koaBody,czwInformationController.Register);//注册到采招网,并保存到数据库
+router.post('/binding',koaBody,czwInformationController.binding);//
 
 
 app
