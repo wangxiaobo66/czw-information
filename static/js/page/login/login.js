@@ -10,9 +10,12 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            username:'',
+            password:''
         }
     }
     render() {
+        let {username,password} = this.state;
         return (
             <div className="module-login">
                 <div className="Login">
@@ -20,11 +23,11 @@ class Login extends React.Component {
                 </div>
                 <div className="icon-c">
                     <i className="iconfont icon--"></i>
-                    <input className="input-under-line" type="text" name="username" placeholder="请输入您的用户名"/>
+                    <input className="input-under-line" type="text" name="username" placeholder="请输入您的用户名" value={username} onChange={(e) => this.change(e)} onBlur={(e) => this.blur(e)}/>
                 </div>
                 <div className="icon-c">
                     <i className="iconfont icon--1"></i>
-                    <input className="input-under-line" type="text" name="password" placeholder="请输入您的账户密码"/>
+                    <input className="input-under-line" type="text" name="password" placeholder="请输入您的账户密码" value={password} onChange={(e) => this.change(e)}/>
                 </div>
                 <p className="ph">请登录微信绑定，可查看用户信息</p>
                 <a className="btn btn-wx" href="javascript:;">绑定微信</a>
@@ -36,6 +39,30 @@ class Login extends React.Component {
     }
     componentDidMount() {
 
+    }
+    change(e){
+        let name = e.target.name;
+        let val = e.target.value;
+        switch (name){
+            case 'username':
+                this.setState({
+                    username:val
+                });
+                break;
+            case 'password':
+                this.setState({
+                   password:val
+                });
+                break;
+        }
+    }
+    blur(e){
+        console.log(1);
+        let val = this.state.username;
+        let data ={'username':val};
+        util.postRequest('/userQuery',data).then(body=>{
+            console.log(body)
+        })
     }
 }
 render(

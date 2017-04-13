@@ -5,7 +5,7 @@ var formParse = require('co-busboy');
 var fetch = require('node-fetch');
 var fs = require('fs');
 var path = require('path');
-var server = 'http://test-wxinfopub.chinabidding.cn/';
+var server = 'http://test-wxinfopub.chinabidding.cn';
 var WXFBSESSIONID = 'oGx7pt8VmTwCQ9ghpCyE9DLua-fE';
 /*
 * username:zhanghaitao
@@ -14,6 +14,7 @@ var WXFBSESSIONID = 'oGx7pt8VmTwCQ9ghpCyE9DLua-fE';
 
 module.exports = {
     //测试
+    /*
     upload:function *(next){
         var parts = formParse(this.request);
         var part;
@@ -35,6 +36,7 @@ module.exports = {
                 filename:filename
             }
     },
+    */
     img:function *(next){
         var url = this.request.url;
         var name = url.substring(url.indexOf('?')+1,url.length);
@@ -43,7 +45,7 @@ module.exports = {
     },
     //开调
     getUser:function *(next){
-        var url = server + 'httpserver.wx.Weixin/getUserWxWxfbSession?WXFBSESSIONID=' + WXFBSESSIONID;
+        var url = server + '/httpserver.wx.Weixin/getUserWxWxfbSession?WXFBSESSIONID=' + WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -56,7 +58,7 @@ module.exports = {
     },
     userQuery:function *(next){
         var data = this.request.body;
-        var url = server + '/httpserver.member.Regist/check?username=' + data;
+        var url = server + '/httpserver.member.Regist/check?username=' + data.username;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -81,7 +83,31 @@ module.exports = {
         this.body = json
     },
     binding:function *(next){
-        var url = server + '/httpserver.member.Login/getUserZbwWxfbSession?WXFBSESSIONID=' + WXFBSESSIONID;
+        var url = server + '/httpserver.member.Login/login3?username=&real_name=&tel=&zhiwei=&email=&WXFBSESSIONID=' + WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
+    login:function*(next){
+        var url = server + '/httpserver.member.Login/login?username=&password=&WXFBSESSIONID=' + WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
+    upload:function*(next){
+        var url = server + '/httpserver.member.Other/zizhiput?WXFBSESSIONID=&is_three=&';
         var result = yield postFetch(url).then(
             body =>{
                 return body;
