@@ -57,11 +57,16 @@ class Login extends React.Component {
         }
     }
     blur(e){
-        console.log(1);
         let val = this.state.username;
         let data ={'username':val};
         util.postRequest('/userQuery',data).then(body=>{
-            console.log(body)
+            body.json().then(
+                json => {
+                    if(json.status<0){
+                        console.log('该帐号不存在,请重新输入。')
+                    }
+                }
+            )
         })
     }
 }

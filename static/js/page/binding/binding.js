@@ -30,16 +30,13 @@ class Binding extends React.Component {
                         <i className="iconfont icon--5"></i>
                         <input className="input-under-line" type="text" name="password" placeholder="选择职位"/>
                     </div>
+                    <div className="icon-c">
+                        <i className="iconfont icon--3"></i>
+                        <input className="input-under-line" type="text" name="password" placeholder="邮箱地址"/>
+                    </div>
                     <a className="btn btn-wx" href="">绑定微信</a>
                 </div>
-                <div className="mc hide">
-                    <div className="tip-contaner no-top">
-                        <p className="quest">绑定完成</p>
-                        <div className="flex-row">
-                            <div className="btn btn-y">确定</div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         )
     }
