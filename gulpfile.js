@@ -7,6 +7,7 @@ const scp = require('gulp-scp2');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const webpack = require('gulp-webpack');
+const watch = require('gulp-watch');
 const rev = require('gulp-rev');
 const webpackConfig = require('./webpack.config.js');
 //图片路径
@@ -67,6 +68,14 @@ gulp.task('distFont',function (){
         .on('error', function (err) {
             console.log(err);
         });
+});
+
+//js
+gulp.task('watchJs',function(){
+    var watcher = gulp.watch('./static/js/page/**/*.js',['distJs']);
+    watcher.on('change', function(event) {
+        console.log('finished');
+    });
 });
 
 gulp.task('appText', ['distJs', 'distImg','distThird','distHtml','distCss','distFont']);

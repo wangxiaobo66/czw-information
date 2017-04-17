@@ -95,7 +95,8 @@ module.exports = {
         this.body = json
     },
     login:function*(next){
-        var url = server + '/httpserver.member.Login/login?username=&password=&WXFBSESSIONID=' + WXFBSESSIONID;
+        var data = this.request.body;
+        var url = server + '/httpserver.member.Login/login?username='+data.username+'&password='+data.password+'&WXFBSESSIONID=' + WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;

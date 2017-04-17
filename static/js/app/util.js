@@ -196,6 +196,7 @@ module.exports = {
         return [arr[arr.length-1],arr[arr.length-2]];//输出数组里的最后两个值
     },
     //数组去重
+    /*
     Array: function (array){
         var res = [];
         var json = {};
@@ -207,9 +208,31 @@ module.exports = {
         }
         return res;
     },
+    */
     //配置hhttp
     http: function(){
         //return "http://139.198.5.38:10001";
         return "";
+    },
+    //存取本地缓存
+    sessionStorage:function(type,name,val){
+        switch (type){
+            case 'get'://取
+                return sessionStorage.getItem(name);
+                break;
+            case 'set'://存
+                sessionStorage.setItem(name, val);
+                break;
+        }
+    },
+    localStorage:function(type,name,val){
+        switch (type){
+            case 'get'://取
+                return localStorage.getItem(name);
+                break;
+            case 'set'://存
+                localStorage.setItem(name, val);
+                break;
+        }
     }
 };
