@@ -71,7 +71,7 @@ module.exports = {
     },
     Register:function *(next){
         var data = this.request.body;
-        var url = server + '/httpserver.member.Regist/regist?username='+data.username+'&password='+data.password+'&pwd='+data.pwd+'&company='+data.company+'&contact='+data.contact+'&tphone='+data.tphone+'&mphone='+data.mphone+'&email='+data.email;
+        var url = server + '/httpserver.member.Regist/regist?username='+data.username+'&password='+data.password+'&pwd='+data.passwordAgain+'&company='+data.company+'&contact='+data.contact+'&tphone='+data.tphone+'&mphone='+data.tel+'&email='+data.email;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -83,7 +83,8 @@ module.exports = {
         this.body = json
     },
     binding:function *(next){
-        var url = server + '/httpserver.member.Login/login3?username=&real_name=&tel=&zhiwei=&email=&WXFBSESSIONID=' + WXFBSESSIONID;
+        var data = this.request.body;
+        var url = server + '/httpserver.member.Login/login3?username='+data.username+'&real_name='+data.realName+'&tel='+data.tel+'&zhiwei='+data.select+'&email='+data.email+'&WXFBSESSIONID=' + WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;

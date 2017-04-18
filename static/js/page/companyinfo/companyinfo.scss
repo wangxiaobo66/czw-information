@@ -27,9 +27,7 @@
   }
   .Company .list {
     width: 100%;
-    height: 1.3333333333rem;
-    line-height: 1.3333333333rem;
-    padding: 0 0.5333333333rem;
+    padding: 0.4rem 0.5333333333rem;
     background-color: #fff;
     margin-bottom: 0.2666666667rem;
     position: relative;
@@ -48,7 +46,6 @@
     width: 1.3333333333rem;
     height: 0.5333333333rem;
     line-height: 0.5333333333rem;
-    margin-top: 0.4rem;
     font-size: 0.2933333333rem;
     float: right;
   }
@@ -61,25 +58,74 @@
     font-size: 0.2933333333rem;
     color: #999;
     margin-top: .05rem;
+    max-width: 80%;
   }
-  .checkbox {
+
+  .switchbox {
+    position: relative;
+    width: 1.2rem;
+    height: 0.6533333333rem;
+    border: 1px solid #DFDFDF;
+    outline: 0;
+    border-radius: 0.4266666667rem;
+    box-sizing: border-box;
+    background-color: #DFDFDF;
+    -webkit-transition: background-color 0.1s, border 0.1s;
+    transition: background-color 0.1s, border 0.1s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .switch-cp__input {
     position: absolute;
-    right: 0;
+    right: 0.5333333333rem;
     top: 0;
-    width: 0.3466666667rem;
-    height: 0.3466666667rem;
-    border-radius: 100%;
-    background-color: #ffc600;
-    margin: 0.4933333333rem 0.56rem;
+    bottom: 0;
+    margin: auto;
   }
-  .curr .checkbox::after {
-    content: "";
-    display: block;
-    width: 0.1333333333rem;
-    height: 0.1333333333rem;
-    border-radius: 100%;
-    background-color: #fff;
-    margin: 0.1066666667rem;
+  .switchbox:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.5rem;
+    height: 0.6rem;
+    border-radius: 0.4rem;
+    background-color: #FDFDFD;
+    -webkit-transition: -webkit-transform 0.35s cubic-bezier(0.45, 1, 0.4, 1);
+    transition: -webkit-transform 0.35s cubic-bezier(0.45, 1, 0.4, 1);
+    transition: transform 0.35s cubic-bezier(0.45, 1, 0.4, 1);
+    transition: transform 0.35s cubic-bezier(0.45, 1, 0.4, 1), -webkit-transform 0.35s cubic-bezier(0.45, 1, 0.4, 1);
+  }
+  .switchbox:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 0.6rem;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    -webkit-transition: -webkit-transform 0.35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+    transition: -webkit-transform 0.35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+    transition: transform 0.35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+    transition: transform 0.35s cubic-bezier(0.4, 0.4, 0.25, 1.35), -webkit-transform 0.35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+  }
+  .switchbox:checked {
+    border-color: #ffc600;
+    background-color: #ffc600;
+  }
+  .switchbox:checked:after {
+    -webkit-transform: translateX(0.5333333333rem);
+    transform: translateX(0.5333333333rem);
+  }
+  .switchbox:checked:before{
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  .weui-switch-cp__input:checked ~ .switchbox {
+    border-color: #ffc600;
+    background-color: #ffc600;
   }
   .in-load .item::after {
     content: " (已上传)";

@@ -26,15 +26,16 @@ class Companyinfo extends React.Component {
                             <option>身份证</option>
                         </select>
                     </div>
-                    <div className="list">
+                    <div className="list cl">
                         <span className="fl">公司名称</span>
                         <span className="item oh">神华集团有限责任公司</span>
                         <span className="btn btn-small">编辑</span>
                         <span className="un-id">(未认证)</span>
                     </div>
-                    <div className="list xinyong curr">
+                    <div className="list xinyong cl">
                         <span>统一社会信用代码</span><span className="ph">工商营业执照、组织机构代码证和税务登记证三证合为一证</span>
-                        <div className="checkbox"></div>
+                        <input id="switchCP" className="switch-cp__input switchbox" type="checkbox"/>
+
                     </div>
                     <div className="list in-load">
                         <span className="item">工商营业执照</span>
@@ -50,9 +51,8 @@ class Companyinfo extends React.Component {
                     </div>
                     <div className="list un-load">
                         <span className="fl">其他资料上传</span>
-                        <input className="file-upload" type="text" name="" placeholder="资料说明" />
-                            <span className="btn btn-small btn-upload"><input type="file" name="" onChange={(e) => this.IMGchange(e)}/></span>
-                            <img src={this.state.imgOne}/>
+                        <input className="file-upload" type="text" name="" placeholder="资料说明"/>
+                            <span className="btn btn-small btn-upload"><input type="file" name=""/></span>
                     </div>
 
                 </div>

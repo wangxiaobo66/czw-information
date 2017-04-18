@@ -10,6 +10,7 @@
     background: url(/img/logo.jpg) center no-repeat;
     background-size: 4.2666666667rem 1.0666666667rem;
   }
+
   .input-under-line {
     border: none;
     width: 100%;
@@ -17,6 +18,10 @@
     line-height: 1.4rem;
     border-bottom: 1px solid #d9d9d9;
     padding-left: 0.6666666667rem;
+  }
+  .input-under-line.zhiwei {
+    color: #999;
+    background-color:#fff;
   }
   .ph {
     color: #999;
@@ -53,5 +58,8 @@
     font-size: 0.56rem;
     padding-top: 0.4rem;
     color: #999;
+  }
+  .icon-c .iconfont.icon--3 {
+    padding-top: 0.3333333333rem;
   }
 }

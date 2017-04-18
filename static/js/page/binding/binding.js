@@ -14,16 +14,16 @@ class Binding extends React.Component {
         this.state = {
             realName:'',
             username:'',
-            position:'',
             tel:'',
             email:'',
+            select:'',
             text:'',
             hide:true
         }
     }
 
     render() {
-        let {realName,position,tel,email,text,hide} = this.state;
+        let {realName,tel,email,text,hide} = this.state;
         return (
             <div className="module-binding">
                 <div className="Binding">
@@ -39,13 +39,20 @@ class Binding extends React.Component {
                     </div>
                     <div className="icon-c">
                         <i className="iconfont icon--5"></i>
-                        <input className="input-under-line" type="text" name="position" placeholder="选择职位" value={position} onChange={(e) => this.change(e)}/>
+                        <select className="input-under-line zhiwei" name="select" onChange={(e) => this.change(e)}>
+                            <option value="" selected="">选择职位</option>
+                            <option value="1">管理</option>
+                            <option value="2">市场</option>
+                            <option value="3">行政</option>
+                            <option value="4">技术</option>
+                            <option value="5">产品</option>
+                        </select>
                     </div>
                     <div className="icon-c">
                         <i className="iconfont icon--3"></i>
                         <input className="input-under-line" type="text" name="email" placeholder="邮箱地址" value={email} onChange={(e) => this.change(e)} onBlur={(e) => this.blur(e)}/>
                     </div>
-                    <a className="btn btn-wx" href="" onClick={(e) => this.click(e)}>绑定微信</a>
+                    <a className="btn btn-wx" href="javascript:;" onClick={(e) => this.click(e)}>绑定微信</a>
                 </div>
                 <Capacity text={text} hide={hide} changeHide={(e) => this.changeHide(e)}/>
             </div>
@@ -53,7 +60,6 @@ class Binding extends React.Component {
     }
     componentDidMount() {
         let username = util.localStorage('get','username');
-        console.log(username);
         this.setState({
             username:username
         })
@@ -77,7 +83,6 @@ class Binding extends React.Component {
                 });
                 break;
             case 'tel':
-                console.log(util.match.mobile.reg.test(val));
                 this.setState({
                     tel:val
                 });
@@ -87,6 +92,11 @@ class Binding extends React.Component {
                     email:val
                 });
                 break;
+            case 'select':
+                this.setState({
+                    select:val
+                });
+                break;
         }
     }
     blur(e){
@@ -94,7 +104,7 @@ class Binding extends React.Component {
         let val = e.target.value;
         switch (name){
             case 'tel':
-                if(!util.match.mobile.reg.test(val)){
+                if(val!=''&&!util.match.mobile.reg.test(val)){
                     this.setState({
                         text:util.match.mobile.msg,
                         hide:false
@@ -102,7 +112,7 @@ class Binding extends React.Component {
                 }
                 break;
             case 'email':
-                if(!util.match.email.reg.test(val)){
+                if(val!=''&&!util.match.email.reg.test(val)){
                     this.setState({
                         text:util.match.mobile.msg,
                         hide:false
@@ -112,16 +122,10 @@ class Binding extends React.Component {
         }
     }
     click(e){
-        let {username,realName,position,tel,email} =this.state;
-        if(realName==''){
+        let {username,realName,tel,email,select} =this.state;
+        if(select==''){
             this.setState({
-                text:'请输入您的真实姓名',
-                hide:false
-            })
-        }
-        if(tel==''||!util.match.email.reg.test(tel)){
-            this.setState({
-                text:util.match.mobile.msg,
+                text:'请选择职位',
                 hide:false
             })
         }
@@ -129,6 +133,62 @@ class Binding extends React.Component {
             this.setState({
                 text:util.match.email.msg,
                 hide:false
+            })
+        }
+        if(tel==''||!util.match.mobile.reg.test(tel)){
+            this.setState({
+                text:util.match.mobile.msg,
+                hide:false
+            })
+        }
+        if(realName==''){
+            this.setState({
+                text:'请输入您的真实姓名',
+                hide:false
+            })
+        }
+        if(username!=''&&realName!=''&&select!=''&&tel!=''||!util.match.mobile.reg.test(tel)&&email!=''&&util.match.email.reg.test(email)){
+            let data = {"username":username,"realName":realName,"select":select,"tel":tel,"email":email};
+            util.postRequest('/login',data).then(body=>{
+                body.json().then(
+                    json => {
+                        if(json.status==-4){
+                            this.setState({
+                                text:'该微信已绑定过采招网父账号',
+                                hide:false
+                            })
+                        }
+                        if(json.state==-5){
+                            this.setState({
+                                text:'采招网父账号为空',
+                                hide:false
+                            })
+                        }
+                        if(json.state==-6){
+                            this.setState({
+                                text:'此邮箱已被占用',
+                                hide:false
+                            })
+                        }
+                        if(json.state==-21){
+                            this.setState({
+                                text:'生成用户失败，请稍后再试',
+                                hide:false
+                            })
+                        }
+                        if(json.state<0&&json.state!=-4&&json.state!=-5&&json.state!=-6&&json.state!=-21){
+                            this.setState({
+                                text:'网络异常，请稍后再试',
+                                hide:false
+                            })
+                        }
+                        if(json.state==1){
+                            this.setState({
+                                text:'绑定成功',
+                                hide:false
+                            })
+                        }
+                    })
             })
         }
     }

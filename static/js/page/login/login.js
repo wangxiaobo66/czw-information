@@ -31,7 +31,7 @@ class Login extends React.Component {
                 </div>
                 <div className="icon-c">
                     <i className="iconfont icon--1"></i>
-                    <input className="input-under-line" type="text" name="password" placeholder="请输入您的账户密码" value={password} onChange={(e) => this.change(e)}/>
+                    <input className="input-under-line" type="password" name="password" placeholder="请输入您的账户密码" value={password} onChange={(e) => this.change(e)}/>
                 </div>
                 <p className="ph">请登录微信绑定，可查看用户信息</p>
                 <a className="btn btn-wx" href="javascript:;" onClick={(e) => this.click(e)}>绑定微信</a>
