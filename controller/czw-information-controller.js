@@ -108,6 +108,18 @@ module.exports = {
         var json = yield JSON.parse(result);
         this.body = json
     },
+    getState:function*(next){
+        var url  = server + '/httpserver.member.Other/getUserZzWxfbSession?WXFBSESSIONID='+WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
     upload:function*(next){
         var url = server + '/httpserver.member.Other/zizhiput?WXFBSESSIONID=&is_three=&';
         var result = yield postFetch(url).then(

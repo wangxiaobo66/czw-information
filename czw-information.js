@@ -32,6 +32,7 @@ router.post('/register',koaBody,czwInformationController.Register);//注册到�
 router.post('/login',koaBody,czwInformationController.login);//用父账号登录
 router.post('/binding',koaBody,czwInformationController.binding);//子账号与父账号相关联
 router.post('/upload',koaBody,czwInformationController.upload);//上传相关
+router.post('/getState',koaBody,czwInformationController.getState);//获取公司状态
 
 
 app

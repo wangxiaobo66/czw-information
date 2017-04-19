@@ -147,9 +147,9 @@ class Binding extends React.Component {
                 hide:false
             })
         }
-        if(username!=''&&realName!=''&&select!=''&&tel!=''||!util.match.mobile.reg.test(tel)&&email!=''&&util.match.email.reg.test(email)){
+        if(username!=''&&realName!=''&&select!=''&&tel!=''&&util.match.mobile.reg.test(tel)&&email!=''&&util.match.email.reg.test(email)){
             let data = {"username":username,"realName":realName,"select":select,"tel":tel,"email":email};
-            util.postRequest('/login',data).then(body=>{
+            util.postRequest('/binding',data).then(body=>{
                 body.json().then(
                     json => {
                         if(json.status==-4){
