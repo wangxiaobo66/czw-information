@@ -12,7 +12,6 @@ var path = require('path');
 var staticCache = require('koa-static-cache');//静态文件
 
 //页面配置
-router.get('/',routerController.index);//首页测试用
 router.get('/login',routerController.login);//登陆
 router.get('/register',routerController.register);//注册
 router.get('/companyinfo',routerController.companyinfo);//公司信息
@@ -31,7 +30,8 @@ router.post('/userQuery',koaBody,czwInformationController.userQuery);//查询采
 router.post('/register',koaBody,czwInformationController.Register);//注册到采招网,并保存到数据库
 router.post('/login',koaBody,czwInformationController.login);//用父账号登录
 router.post('/binding',koaBody,czwInformationController.binding);//子账号与父账号相关联
-router.post('/upload',koaBody,czwInformationController.upload);//上传相关
+router.post('/upload',koaBody,czwInformationController.upload);//上传相关图片（给枢波）
+router.post('/uploadMy',koaBody,czwInformationController.uploadMy);//上传图片存入服务器指定位置（for me）
 router.post('/getState',koaBody,czwInformationController.getState);//获取公司状态
 
 

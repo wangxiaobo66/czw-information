@@ -234,5 +234,23 @@ module.exports = {
                 localStorage.setItem(name, val);
                 break;
         }
+    },
+    //图片上传
+    imageUpload:function(e,url,name){
+        var formData = new FormData();
+        if (!e.target.value) {
+            return false
+        } else {
+            formData.append(name, e.target.files[0]);
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/javascript, */*; q=0.01', //接受数据格式
+                    //'Content-Type':'multipart/form-data; charset=UTF-8'//上传文件不指定content-type
+                },
+                //credentials: 'include', //使用cookie  默认不使用cookie
+                body: formData
+            })
+        }
     }
 };

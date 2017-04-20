@@ -120,7 +120,13 @@ module.exports = {
         var json = yield JSON.parse(result);
         this.body = json
     },
-    upload:function*(next){
+    uploadMy:function*(next){//给自己
+        var file = this.request.body;
+        //var filePath = file.files.file.path;
+        console.log(file);
+        this.body = 111;
+    },
+    upload:function*(next){//给枢波
         var url = server + '/httpserver.member.Other/zizhiput?WXFBSESSIONID=&is_three=&';
         var result = yield postFetch(url).then(
             body =>{
