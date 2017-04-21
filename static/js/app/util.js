@@ -237,6 +237,7 @@ module.exports = {
     },
     //图片上传
     imageUpload:function(e,url,name){
+        console.log(e.target.value,name);
         var formData = new FormData();
         if (!e.target.value) {
             return false

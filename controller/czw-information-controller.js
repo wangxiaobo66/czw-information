@@ -121,13 +121,62 @@ module.exports = {
         this.body = json
     },
     uploadMy:function*(next){//给自己
+
         var file = this.request.body;
-        //var filePath = file.files.file.path;
-        console.log(file);
-        this.body = 111;
+        var files = file.files;
+        var str = printObject(files);
+        var attr = str.split(':');
+        var attrs = attr[0].split('_');
+        var oldPath = file.files[attr[0]].path;
+
+        var filePath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/';
+        var newPath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
+        createFolder(newPath);
+
+        var Attrs = fs.readdirSync(filePath);
+        if(Attrs.length == 0){
+            fs.renameSync(oldPath, newPath)
+        }else{
+            fs.unlinkSync(newPath);
+            var newPath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
+            fs.renameSync(oldPath, newPath)
+        }
+        this.body={status:'1'};
+       /*另一种方法
+        var parts = formParse(this.request);
+        var part;
+        var _this = this;
+        while (part = yield parts){
+            console.log(typeof part,'**');
+            var attr = part.fieldname.split('_');
+            var filePath = '../data/file/company/zz/'+attr[0]+'/'+attr[1]+'/';
+
+            var newpath = '../data/file/company/zz/'+attr[0]+'/'+attr[1]+'/'+attr[1]+'.jpg';
+            createFolder(newpath);
+
+            var attrs = fs.readdirSync(filePath);
+
+            if(attrs.length == 0){
+                var stream = fs.createWriteStream(newpath);
+                //写入文件路径
+                part.pipe(stream);
+                _this.body = {status:1};
+            }else{
+                fs.unlinkSync(newpath);
+                var newpath = '../data/file/company/zz/'+attr[0]+'/'+attr[1]+'/'+attr[1]+'.jpg';
+                createFolder(newpath);
+                var stream = fs.createWriteStream(newpath);
+                //写入文件路径
+                part.pipe(stream);
+                _this.body = {status:1};
+            }
+        }
+        */
+
     },
     upload:function*(next){//给枢波
-        var url = server + '/httpserver.member.Other/zizhiput?WXFBSESSIONID=&is_three=&';
+        var data = this.request.body;
+        var url = server + '/httpserver.member.Other/zizhiput?WXFBSESSIONID='+WXFBSESSIONID+'&is_three=&';
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -156,4 +205,24 @@ function postFetch(url,data){
         .catch(function(error){
             console.log(error);
         });
+}
+//
+var createFolder = function(to) { //文件写入
+    var sep = path.sep;
+    var folders = path.dirname(to).split(sep);
+    var p = '';
+    while (folders.length) {
+        p += folders.shift() + sep;
+        if (!fs.existsSync(p)) {
+            fs.mkdirSync(p);
+        }
+    }
+};
+
+function printObject(obj){
+    var temp = "";
+    for(var i in obj){//用javascript的for/in循环遍历对象的属性
+        temp += i+":"+obj[i]+"\n";
+    }
+    return temp;//结果：cid:C0 \n ctext:区县
 }

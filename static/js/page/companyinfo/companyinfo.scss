@@ -1,12 +1,13 @@
+html,body {
+  height: 100%;
+  background-color: #efefef;
+}
 .module-companyinfo{
-  html,body {
-    height: 100%;
-  }
   .status {
     border: solid 1px #999;
     appearance:none;
     -webkit-appearance:none;
-    width: 7.27rem;
+    width: 7.272222222rem;
     height: 0.6666666667rem;
     line-height: 0.6666666667rem;
     padding: 0 0.2666666667rem;
@@ -41,13 +42,25 @@
     margin-left: .1rem;
   }
   .Company .list .btn-small {
-    background-color: #ffc600;
-    color: #333;
+    position: relative;
+    font-size: 0.2933333333rem;
     width: 1.3333333333rem;
     height: 0.5333333333rem;
     line-height: 0.5333333333rem;
-    font-size: 0.2933333333rem;
     float: right;
+    background-color: #ffc600;
+    color: #333;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  .Company .list .btn-small .upload {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
   }
   .Company .list.xinyong {
     line-height: normal;
@@ -150,7 +163,7 @@
     border:1px solid #999;
     overflow: hidden;
     padding-left: 0.2666666667rem;
-    margin: 0.3333333333rem auto auto 0.2666666667rem;
+    margin-left: 0.2666666667rem;
     color: #999;
     font-size: 0.3733333333rem;
   }
@@ -161,7 +174,7 @@
   .oh {
     display: inline-block;
     padding-left: .2rem;
-    max-width: 4。2rem;
+    max-width: 4.2rem;
     text-overflow : ellipsis;
     white-space : nowrap;
     overflow : hidden;
@@ -179,6 +192,15 @@
     height: 0.5333333333rem;
   }
   .red{
-    color:red;
+    color:red
+  }
+  .btn-sub {
+    width: 9rem;
+    margin: 0.5333333333rem auto 0 auto;
+    padding: .4rem;
+    font-size: 0.4266666667rem;
+    color: #333;
+    background-color: #ffc600;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 }

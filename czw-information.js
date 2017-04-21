@@ -7,7 +7,9 @@ var router = require('koa-router')();
 var Router = require('koa-router');
 var czwInformationController = require('./controller/czw-information-controller');
 var routerController = require('./controller/router-controller');
-var koaBody = require('koa-body')();
+var koaBody = require('koa-body')({
+    multipart: true
+});
 var path = require('path');
 var staticCache = require('koa-static-cache');//静态文件
 
