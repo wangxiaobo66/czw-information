@@ -264,7 +264,7 @@ class Companyinfo extends React.Component {
          */
         let data;
         if(idType==1){//招标代理
-            if(isThree==0){//三证合一
+            if(isThree==1){//三证合一
                 if(dlzz==""){
                     this.setState({
                         text:'请上传代理资质证',
