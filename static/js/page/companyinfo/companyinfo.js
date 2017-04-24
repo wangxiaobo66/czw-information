@@ -36,7 +36,7 @@ class Companyinfo extends React.Component {
                 <div className="Company">
                     <div className="list">
                         <span className="red">*</span><span>身份选择</span>
-                        <select className="status" onChange={(e) => this.idChange(e)}>
+                        <select className="status" value={idType} onChange={(e) => this.idChange(e)}>
                             <option value="1">招标代理</option>
                             <option value="2">招标业主</option>
                         </select>
@@ -116,7 +116,7 @@ class Companyinfo extends React.Component {
                                 }
                             </div>
                     }
-                    <div className="btn btn-sub">
+                    <div className="btn btn-sub" onClick={(e) => this.click(e)}>
                         提交
                     </div>
                 </div>
@@ -134,8 +134,11 @@ class Companyinfo extends React.Component {
                         fId: json.f_id
                     });
                 })
-        })
+        });
+        let theRequest = util.GetRequest();
+        //alert(theRequest.code);
     }
+
 
     changeHide(e) {
         if (e) {
@@ -244,6 +247,88 @@ class Companyinfo extends React.Component {
             this.setState({
                 isThree: 1
             })
+        }
+    }
+    //点击提交
+    click(e){
+        let {idType, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide} = this.state;
+        /*
+         //004 is_three        bigint(11) NOT NULL DEFAULT '0',   0-表示三证合一  1-表示三证不合一
+         //005 code            varchar(200) NULL 三证合一代码
+         //006 yyzz            varchar(200) NULL 营业执照 英文+数字 无中文无标点 附件
+         //007 zzjgdmz         varchar(200) NULL 组织机构代码证 英文+数字 无中文无标点 附件
+         //008 swdjz           varchar(200) NULL 税务登记证 英文+数字 无中文无标点 附件
+         //011 id_type         bigint(11) NOT NULL DEFAULT '0' 身份类型  0未知 1招标代理 2招标业主
+         //012 daili_zz        varchar(200) NULL 代理资质 英文+数字 无中文无标点 附件
+         //014 first_info      varchar(200) NULL 首条公告扫描件 附件(a,html,b.jpg,c.png,)
+         */
+        let data;
+        if(idType==1){//招标代理
+            if(isThree==0){//三证合一
+                if(dlzz==""){
+                    this.setState({
+                        text:'请上传代理资质证',
+                        hide:false
+                    })
+                }
+                if(zzjgdmz==""){
+                    this.setState({
+                        text:'请上传组织机构代码证',
+                        hide:false
+                    })
+                }
+                if(swdjz==""){
+                    this.setState({
+                        text:'请上传税务登记证件',
+                        hide:false
+                    })
+                }
+                if(gszz==""){
+                    this.setState({
+                        text:'请上传工商营业执照',
+                        hide:false
+                    })
+                }
+                if(dlzz!=""&&zzjgdmz!=""&&swdjz!=""&&gszz!=""){
+                    data = {"id_type":idType,"is_three":isThree,"code":"","yyzz":gszz+".jpg","zzjgdmz":zzjgdmz+".jpg","swdjz":swdjz+".jpg","daili_zz":dlzz+".jpg","first_info":""};
+                    util.postRequest('/upload',data).then(body => {
+                        body.json().then(
+                            json => {
+                                console.log(json)
+                            })
+                    })
+                }
+            }else{//非三证合一
+                if(code==""){
+                    this.setState({
+                        text:'请上传工商营业执照',
+                        hide:false
+                    })
+                }else{
+                    data = {"id_type":idType,"is_three":isThree,"code":code+".jpg","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":""};
+                    util.postRequest('/upload',data).then(body => {
+                        body.json().then(
+                            json => {
+                                console.log(json)
+                            })
+                    })
+                }
+            }
+        }else{//招标业主
+            if(ggsmj==""){
+                this.setState({
+                    text:'请上传公告扫描件',
+                    hide:false
+                })
+            }else{
+                data = {"id_type":idType,"is_three":isThree,"code":"","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":ggsmj+".jpg"};
+                util.postRequest('/upload',data).then(body => {
+                    body.json().then(
+                        json => {
+                            console.log(json)
+                        })
+                })
+            }
         }
     }
 }

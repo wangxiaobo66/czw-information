@@ -15,23 +15,52 @@ class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            imgOne: ''
+            imgOne: '',
+            echostr:'',
+            body:'',
+            signature:'',
+            timestamp:'',
+            nonce:''
         }
     }
 
     render() {
+        let {echostr} = this.state;
         return (
             <div className="module-index">
-                <h1>图片上传</h1>
-                <input type="file" onChange={(e) => this.IMGchange(e)}/>
-                <img src={this.state.imgOne}/>
-                <input type="file" onChange={(e) => this.change(e)}/>
+                <p>{echostr}</p>
             </div>
         )
     }
 
     componentDidMount() {
-
+        //String body, String signature, String timestamp, String nonce, String echostr
+        let theRequest = util.GetRequest();
+        if(theRequest.echostr){
+            this.setState({
+                echostr:theRequest.echostr
+            })
+        }
+        if(theRequest.body){
+            this.setState({
+                body:theRequest.body
+            })
+        }
+        if(theRequest.signature){
+            this.setState({
+                body:theRequest.signature
+            })
+        }
+        if(theRequest.timestamp){
+            this.setState({
+                body:theRequest.timestamp
+            })
+        }
+        if(theRequest.nonce){
+            this.setState({
+                body:theRequest.nonce
+            })
+        }
     }
 
     change(e) {

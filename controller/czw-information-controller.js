@@ -44,6 +44,20 @@ module.exports = {
         this.body = img;
     },
     //开调
+    //获取WXFBSESSIONID
+    getWXFBSESSIONID:function *(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.wx.Weixin/getUserWxoAuth2?code='+data.code+'&state=1510';
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
     getUser:function *(next){
         var url = server + '/httpserver.wx.Weixin/getUserWxWxfbSession?WXFBSESSIONID=' + WXFBSESSIONID;
         var result = yield postFetch(url).then(
@@ -175,8 +189,9 @@ module.exports = {
 
     },
     upload:function*(next){//给枢波
+        //data = {"id_type":idType,"is_three":isThree,"code":code+".jpg","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":""};
         var data = this.request.body;
-        var url = server + '/httpserver.member.Other/zizhiput?WXFBSESSIONID='+WXFBSESSIONID+'&is_three=&';
+        var url = server + '/httpserver.member.Other/setZizhi?WXFBSESSIONID='+WXFBSESSIONID+'&is_three='+data.is_three+'&id_type='+data.id_type+'&code='+data.code+'&yyzz='+data.yyzz+'&zzjgdmz='+data.zzjgdmz+'&swdjz='+data.swdjz+'&daili_zz='+data.daili_zz+'&first_info='+data.first_info;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -186,7 +201,45 @@ module.exports = {
         });
         var json = yield JSON.parse(result);
         this.body = json
-    }
+    },
+    messageList:function*(next){
+        var url = server + '/httpserver.info.Info/getMoreInfoOneMember?WXFBSESSIONID='+WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
+    messageDetails:function*(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/getOneInfoOneMember?WXFBSESSIONID='+WXFBSESSIONID+'&id='+data.id;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
+    messageDelete:function*(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/delOneInfoOneMember?WXFBSESSIONID='+WXFBSESSIONID+'&id='+data.id;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
 };
 //post请求共用方法
 function postFetch(url,data){

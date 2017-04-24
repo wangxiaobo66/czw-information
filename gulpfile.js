@@ -82,7 +82,8 @@ gulp.task('appText', ['distJs', 'distImg','distThird','distHtml','distCss','dist
 
 gulp.task('server',function(){
     'use strict';
-    return gulp.src(['./dist/**/*','./controller/*','czw-information.js','package.json'])
+    return gulp.src(['./**/*','!./node_modules/**/*','!./static/**/*','!./template/**/*','!./.gitignore','!./README.md','!./gulpfile.js','!./webpack.config.js'])
+    //return gulp.src(['./dist/**/*','./controller/*','czw-information.js','package.json'])
         .pipe(scp({
             host: host,
             username: username,
