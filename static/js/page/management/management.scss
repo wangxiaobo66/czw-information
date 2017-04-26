@@ -1,7 +1,7 @@
+html,body {
+  height: 100%;
+}
 .module-management{
-  html,body {
-    height: 100%;
-  }
   .Management {
     display: block;
     height: 100%;
@@ -40,6 +40,7 @@
     background-color: #fff;
     width: 49%;
     padding: .2rem;
+    margin-bottom: 0.1333333333rem;
   }
   .unpublish>p,.published>p {
     height: 0.5333333333rem;
@@ -63,7 +64,7 @@
     white-space : nowrap;
     float: left;
   }
-  .unpublish .item::after{
+  .management-ul .unpublish .item::after{
     content: "未发布";
     color:#ff6b6b;
   }
@@ -146,5 +147,61 @@
   }
   .mc .btn-w,.mc .btn-y {
     margin: 0.2666666667rem auto;
+  }
+  .mc-contaner.article {
+    background-color: #fff;
+    padding: 0 0.2rem;
+    width: 9rem;
+  }
+  .mc .mc-contaner .head-title {
+    line-height: 2;
+    width:70%;
+    font-size: 0.32rem;
+    padding: .4rem 0;
+  }
+  .mc .mc-contaner .status {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    padding: 0.2666666667rem 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+  .mc .mc-contaner .status-item{
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    padding: 0 0.2666666667rem;
+    color: #00a0e9;
+  }
+  .mc .mc-contaner .status-item:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    bottom: 0;
+    border-right: 1px solid #999;
+    color: #999;
+  }
+  .mc .mc-contaner .status-item:first-of-type:before {
+    display: none;
+  }
+  .status-item>p:first-of-type {
+    color: #999;
+    margin-bottom: 0.2666666667rem;
+  }
+  .unpublish {
+    color: #ff6b6b;
+  }
+  .mc .mc-contaner .ar {
+    padding-bottom: 0.2666666667rem;
+    text-align: justify;
+  }
+  .mc .mc-contaner .ar>p {
+    padding: 0.2666666667rem 0;
+    line-height: 1.75;
+    color: #999;
   }
 }

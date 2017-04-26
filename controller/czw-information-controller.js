@@ -203,7 +203,8 @@ module.exports = {
         this.body = json
     },
     messageList:function*(next){
-        var url = server + '/httpserver.info.Info/getMoreInfoOneMember?WXFBSESSIONID='+WXFBSESSIONID;
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/getMoreInfoOneMember?type='+data.type+'&page='+data.page+'&rp='+data.rp+'&WXFBSESSIONID='+WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;

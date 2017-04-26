@@ -18,7 +18,7 @@ export class Details extends React.Component {
         let {details} = this.state;
         console.log(details);
         return(
-            <li className="unpublish">
+            <li className={details.ok_status==0?"unpublish":"published"}>
                 <p>
                     <span>ID号</span>
                     <span>{details.record_id}</span>
@@ -36,14 +36,32 @@ export class Details extends React.Component {
                     <span>{util.getLocalTime(details.submit_date)}</span>
                 </p>
                 <div className="flex-row-around">
-                    <div className="btn btn-y">查看</div>
-                    <div className="btn btn-w">删除</div>
+                    <div className="btn btn-y" name="details" id={details.record_id} onClick={(e) => this.click(e)}>查看</div>
+                    {
+                        details.ok_status==0?
+                            <div className="btn btn-w" name="delete" id={details.record_id} onClick={(e) => this.click(e)}>删除</div>
+                            :
+                            <div className="btn btn-w" name="associated" id={details.record_id} onClick={(e) => this.click(e)}>关联</div>
+                    }
+
                 </div>
             </li>
         )
     }
     componentWillReceiveProps(nextProps) {
 
+    }
+    click(e){
+        let name = e.target.name;
+        let id = e.target.id;
+        switch (name){
+            case 'details':
+                break;
+            case 'delete':
+                break;
+            case 'associated':
+                break;
+        }
     }
 }
 Details.propTypes = {
