@@ -225,6 +225,7 @@ module.exports = {
         ).catch(function(error){
             console.log(error)
         });
+        console.log(result,typeof result,"**");
         var json = yield JSON.parse(result);
         this.body = json
     },
@@ -238,7 +239,12 @@ module.exports = {
         ).catch(function(error){
             console.log(error)
         });
-        var json = yield JSON.parse(result);
+        var json;
+        if(result=="ok"){
+            json = {"state":"ok"}
+        }else{
+            json = {"state":""}
+        }
         this.body = json
     },
 };

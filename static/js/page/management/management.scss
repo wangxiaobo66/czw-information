@@ -64,11 +64,11 @@ html,body {
     white-space : nowrap;
     float: left;
   }
-  .management-ul .unpublish .item::after{
+  .management-ul .unpublish .item::after,.status.unpublish .pub:before{
     content: "未发布";
     color:#ff6b6b;
   }
-  .published .item::after{
+  .published .item::after,.status.published .pub:before{
     content: "已发布";
     color:#00a0e9;
   }
@@ -152,10 +152,12 @@ html,body {
     background-color: #fff;
     padding: 0 0.2rem;
     width: 9rem;
+    max-height: 90%;
+    overflow: scroll;
   }
   .mc .mc-contaner .head-title {
     line-height: 2;
-    width:70%;
+    text-align: center;
     font-size: 0.32rem;
     padding: .4rem 0;
   }
@@ -191,9 +193,6 @@ html,body {
   .status-item>p:first-of-type {
     color: #999;
     margin-bottom: 0.2666666667rem;
-  }
-  .unpublish {
-    color: #ff6b6b;
   }
   .mc .mc-contaner .ar {
     padding-bottom: 0.2666666667rem;

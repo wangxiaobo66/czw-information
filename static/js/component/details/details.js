@@ -16,32 +16,32 @@ export class Details extends React.Component {
     }
     render(){
         let {details} = this.state;
-        console.log(details);
+        let date = util.date(details.publish_date);
         return(
-            <li className={details.ok_status==0?"unpublish":"published"}>
+            <li className="published">
                 <p>
                     <span>ID号</span>
-                    <span>{details.record_id}</span>
+                    <span>{details.id}</span>
                 </p>
                 <p>
                     <span>中标主题</span>
                     <span>{details.title}</span>
                 </p>
-                <p>
+                <p className={details.ok_status==200?"published":"unpublish"}>
                     <span>发布状态</span>
                     <span className="item"></span>
                 </p>
                 <p>
                     <span>提交时间</span>
-                    <span>{util.getLocalTime(details.submit_date)}</span>
+                    <span>{util.formatDate(date)}</span>
                 </p>
                 <div className="flex-row-around">
-                    <div className="btn btn-y" name="details" id={details.record_id} onClick={(e) => this.click(e)}>查看</div>
+                    <div className="btn btn-y" name="details" id={details.id} onClick={(e) => this.click(e)}>查看</div>
                     {
                         details.ok_status==0?
-                            <div className="btn btn-w" name="delete" id={details.record_id} onClick={(e) => this.click(e)}>删除</div>
+                            <div className="btn btn-w" name="delete" id={details.id} onClick={(e) => this.click(e)}>删除</div>
                             :
-                            <div className="btn btn-w" name="associated" id={details.record_id} onClick={(e) => this.click(e)}>关联</div>
+                            <div className="btn btn-w" name="associated" id={details.id} onClick={(e) => this.click(e)}>关联</div>
                     }
 
                 </div>
@@ -52,15 +52,42 @@ export class Details extends React.Component {
 
     }
     click(e){
-        let name = e.target.name;
+        let name = e.target.getAttribute('name');
         let id = e.target.id;
         switch (name){
             case 'details':
+                this.details(id);
                 break;
             case 'delete':
+                this.delete(id);
                 break;
             case 'associated':
+                this.associated(id);
                 break;
+        }
+    }
+    details(id){//查看详情
+        let data = {"id":id};
+        util.postRequest('/messageDetails',data).then(body=> {
+            body.json().then(
+                json => {
+                    let { changeDetails } = this.props;
+                    if(typeof changeDetails == "function") {
+                        changeDetails(json);
+                    }
+                })
+        })
+    }
+    delete(id){//删除
+        let { changeDelete } = this.props;
+        if(typeof changeDelete == "function") {
+            changeDelete(id);
+        }
+    }
+    associated(id){//关联
+        let {changeAssociated} = this.props;
+        if(typeof changeAssociated == "function"){
+            changeAssociated(id)
         }
     }
 }

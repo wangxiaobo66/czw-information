@@ -87,6 +87,7 @@ module.exports = {
             console.log("util.objToUrlString需要传入对象(一维)类型参数");
         }
     },
+    //处理时间戳，如13000000000000
     getLocalTime: function(time) {
         let date = new Date(parseInt(time));
         let Y = date.getFullYear();
@@ -97,6 +98,18 @@ module.exports = {
         let s = date.getSeconds();
 
         return Y + '-' + M + '-' + D;
+    },
+    //处理时间格式,如Fri Apr 28 2017 16:24:01 GMT+0800 (CST)
+    formatDate : function(date) {
+        let y = date.getFullYear();
+        let m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        let d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        return y + '-' + m + '-' + d;
+    },
+    date:function(date){
+        return new Date(date)
     },
     contains: function( a, b ) { //from jquery.contains
         if ( b ) {
