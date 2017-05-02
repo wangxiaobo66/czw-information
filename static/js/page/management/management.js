@@ -24,12 +24,13 @@ class Management extends React.Component {
             textPro:'',
             hide:true,
             text:'',
+            value:'',
             associated:false,
             id:''
         }
     }
     render() {
-        let {list,page,total,type,details,mc,hide,text,hidePro,textPro,associated} = this.state;
+        let {list,page,total,type,details,mc,hide,text,hidePro,textPro,associated,value} = this.state;
         let date = util.date(details.publish_date);
         return (
             <div className="module-management">
@@ -55,9 +56,8 @@ class Management extends React.Component {
                     {/*关联*/}
                     <div className={"mc"+(associated?"":" hide")} onClick={(e) => this.associatedMc(e)}>
                         <div className="mc-contaner">
-                            <input className="mc-search-input" type="number" name="" placeholder="请输入您想查找的招标信息ID" onChange={(e) => this.associatedChange(e)}/>
-                                <div className="btn mc-btn-search">搜索</div>
-                            {/*
+                            <input className="mc-search-input" type="number" name="" placeholder="请输入您想查找的招标信息ID" value={value} onChange={(e) => this.associatedChange(e)}/>
+                            <div className="btn mc-btn-search" onClick={(e) => this.submit(e)}>搜索</div>
                                 <div className="published">
                                     <p>
                                         <span>ID号</span>
@@ -77,6 +77,7 @@ class Management extends React.Component {
                                     </p>
                                     <div className="btn btn-y">关联招标</div>
                                 </div>
+                            {/*
                                 < div  className="published">
                                 <p>
                                 <span>ID号</span>
@@ -97,6 +98,7 @@ class Management extends React.Component {
                                 <div className="btn btn-w">取消关联</div>
                                 </div>
                             */}
+                            <div className="btn btn-close">关闭</div>
                         </div>
                     </div>
                     {/*查看详情*/}
@@ -260,9 +262,25 @@ class Management extends React.Component {
     }
     //关联蒙层
     associatedMc(e){
-        //console.log(event);
-        //event.stopPropagation();
-        console.log(e.stopPropagation());
+       this.setState({
+           associated:false
+       })
+    }
+    //input赋值
+    associatedChange(e){
+        if ( e && e.stopPropagation ) {
+            e.stopPropagation();
+            this.setState({
+                value:e.target.value
+            })
+        }
+    }
+    //点击搜索
+    submit(e){
+        if ( e && e.stopPropagation ) {
+            e.stopPropagation();
+            console.log(1);
+        }
     }
 }
 render(

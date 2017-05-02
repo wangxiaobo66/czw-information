@@ -113,12 +113,13 @@ html,body {
     margin: 0.2666666667rem auto;
   }
   .mc-search-input {
-    width: 6.6666666667rem;
+    width: 6.4rem;
     height: 1.0rem;
     line-height: 1rem;
     border-radius: 0.1rem;
     padding-left: 0.2666666667rem;
     font-size: 0.3733333333rem;
+    margin-bottom: .5rem;
   }
   .mc .mc-btn-search {
     width: 2.1333333333rem;
@@ -130,9 +131,16 @@ html,body {
     color: #333;
     margin: 0;
   }
+  .mc .btn.btn-close {
+    font-size: 0.5066666667rem;
+    width: 100%;
+    margin-top: .5rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    background-color: #ffc600;
+  }
   .mc .published {
     background-color: #fff;
-    margin-top: 0.2666666667rem;
     padding: 0.2666666667rem;
   }
   .mc .published>p {
@@ -142,18 +150,20 @@ html,body {
   .mc .published p span:last-of-type {
     float: right;
     text-align: right;
-    overflow: scroll;
+    overflow: hidden;
     max-width: 6.6666666667rem;
   }
   .mc .btn-w,.mc .btn-y {
     margin: 0.2666666667rem auto;
   }
-  .mc-contaner.article {
-    background-color: #fff;
-    padding: 0 0.2rem;
+  .mc-contaner {
     width: 9rem;
-    max-height: 90%;
+  }
+  .article {
+    background-color: #fff;
+    padding: 0 .2rem;
     overflow: scroll;
+    max-height: 60vh;
   }
   .mc .mc-contaner .head-title {
     line-height: 2;
