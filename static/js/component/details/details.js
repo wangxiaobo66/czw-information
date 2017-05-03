@@ -41,7 +41,9 @@ export class Details extends React.Component {
                         details.ok_status==0?
                             <div className="btn btn-w" name="delete" id={details.id} onClick={(e) => this.click(e)}>删除</div>
                             :
-                            <div className="btn btn-w" name="associated" id={details.id} onClick={(e) => this.click(e)}>关联</div>
+                                details.type != 2000?
+                                <div className="btn btn-w" name="associated" id={details.id} onClick={(e) => this.click(e)}>关联</div>
+                                :null
                     }
 
                 </div>

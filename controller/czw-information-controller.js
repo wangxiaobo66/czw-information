@@ -70,6 +70,43 @@ module.exports = {
         var json = yield JSON.parse(result);
         this.body = json
     },
+    getUserMine:function *(next){
+        var url = server + '/httpserver.member.Login/getUserZbwWxfbSession?WXFBSESSIONID='+WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
+    unLogin:function *(next){
+        var url = server + '/httpserver.member.Login/unlogin?WXFBSESSIONID='+WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
+    tongJi:function *(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/tongji?WXFBSESSIONID='+WXFBSESSIONID+'&time='+data.time;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json
+    },
     userQuery:function *(next){
         var data = this.request.body;
         var url = server + '/httpserver.member.Regist/check?username=' + data.username;
@@ -225,8 +262,12 @@ module.exports = {
         ).catch(function(error){
             console.log(error)
         });
-        console.log(result,typeof result,"**");
-        var json = yield JSON.parse(result);
+        var json;
+        if(result==""){
+            json = {"state":""};
+        }else{
+            json = yield JSON.parse(result);
+        }
         this.body = json
     },
     messageDelete:function*(next){
@@ -247,7 +288,69 @@ module.exports = {
         }
         this.body = json
     },
+    getRelation:function*(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/getRelationZbgs?WXFBSESSIONID='+WXFBSESSIONID+'&id_zbgg='+data.id;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        console.log(result);
+        var json;
+        if(result==""){
+            json = {"state":""};
+        }else{
+            json = {"state":result};
+        }
+        this.body = json
+    },
+    relation:function*(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/relationZbgs?WXFBSESSIONID='+WXFBSESSIONID+'&id_zbgg='+data.zbggId+'&id_zbgs='+data.zbgsId;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json;
+        if(result=="ok"){
+            json = {"state":"ok"}
+        }else{
+            json = {"state":""}
+        }
+        this.body = json
+    },
+    unRelation:function*(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/unrelationZbgs?WXFBSESSIONID='+WXFBSESSIONID+'&id_zbgg='+data.zbggId+'&id_zbgs='+data.zbgsId;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json;
+        if(result=="ok"){
+            json = {"state":"ok"}
+        }else{
+            json = {"state":""}
+        }
+        this.body = json
+    },
 };
+/*
+ /httpserver.info.Info/relationZbgs?WXFBSESSIONID=&id_zbgg=&id_zbgs=    参数一为原招标公告id  参数二为中标公告id  关联接口 用户直接填写被关联的id号查询
+ /httpserver.info.Info/unrelationZbgs?WXFBSESSIONID=&id_zbgg=&id_zbgs=  参数一为原招标公告id  参数二为中标公告id  取消关联接口
+ /httpserver.info.Info/getRelationZbgs?WXFBSESSIONID=&id_zbgg=          参数一为原招标公告id  查询此招标公告是否有关联的中标接口
+ 我想了这仨接口 你看看你能用不
+ */
+
 //post请求共用方法
 function postFetch(url,data){
     return fetch(url,{

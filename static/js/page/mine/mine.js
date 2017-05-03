@@ -22,7 +22,7 @@ class Mine extends React.Component {
                         </div>
                         <div className="user-info">
                             <p className="user-name">蒙奇D路飞先生</p>
-                            <span className="account-integral">账户积分：</span><span className="y">168168168</span>
+                            <span className="account-integral">账户积分：</span><span className="y">0</span>
                         </div>
                         <a className="btn btn-small" href="">解绑微信</a>
                     </div>
@@ -75,7 +75,15 @@ class Mine extends React.Component {
         )
     }
     componentDidMount() {
-
+        this.getUserMine()
+    }
+    getUserMine(){
+        util.postRequest('/getUserMine').then(body=>{
+            body.json().then(
+                json =>{
+                    console.log(json)
+                })
+        })
     }
 }
 render(

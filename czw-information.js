@@ -39,6 +39,13 @@ router.post('/getState',koaBody,czwInformationController.getState);//获取公�
 router.post('/messageList',koaBody,czwInformationController.messageList);//信息管理列表
 router.post('/messageDetails',koaBody,czwInformationController.messageDetails);//单条信息查看
 router.post('/messageDelete',koaBody,czwInformationController.messageDelete);//单条信息删除
+router.post('/getRelation',koaBody,czwInformationController.getRelation);//查看公告是否关联
+router.post('/relation',koaBody,czwInformationController.relation);//关联
+router.post('/unRelation',koaBody,czwInformationController.unRelation);//取消关联
+router.post('/getUserMine',koaBody,czwInformationController.getUserMine);//获取个人信息
+router.post('/unLogin',koaBody,czwInformationController.unLogin);//解绑微信
+router.post('/tongJi',koaBody,czwInformationController.tongJi);//统计信息/httpserver.info.Info/tongji?WXFBSESSIONID=&time=   time -1 表示全部 0当月-自然月 1上一个月-自然月 2上上一个月自然月   12 ,往前数第12个自然月 没有其它值 默认为0 当月统计
+//统计接口 按月 招标 中标 采购   创建时间?  发布日期     1010 1020 2000
 
 
 app

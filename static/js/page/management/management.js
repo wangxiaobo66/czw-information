@@ -26,11 +26,14 @@ class Management extends React.Component {
             text:'',
             value:'',
             associated:false,
-            id:''
+            id:'',
+            zbgsId:'',
+            associatedDetails:'',
+            submit:false
         }
     }
     render() {
-        let {list,page,total,type,details,mc,hide,text,hidePro,textPro,associated,value} = this.state;
+        let {list,page,total,type,details,mc,hide,text,hidePro,textPro,associated,value,zbgsId,associatedDetails,submit} = this.state;
         let date = util.date(details.publish_date);
         return (
             <div className="module-management">
@@ -54,18 +57,50 @@ class Management extends React.Component {
                                 :''
                         }
                     {/*关联*/}
-                    <div className={"mc"+(associated?"":" hide")} onClick={(e) => this.associatedMc(e)}>
+                    <div className={"mc"+(associated?"":" hide")}>
                         <div className="mc-contaner">
-                            <input className="mc-search-input" type="number" name="" placeholder="请输入您想查找的招标信息ID" value={value} onChange={(e) => this.associatedChange(e)}/>
-                            <div className="btn mc-btn-search" onClick={(e) => this.submit(e)}>搜索</div>
+                            {
+                                zbgsId==""?
+                                    <div>
+                                        <input className="mc-search-input" type="number" name="" placeholder="请输入您想查找的招标信息ID" value={value} onChange={(e) => this.associatedChange(e)}/>
+                                        <div className="btn mc-btn-search" onClick={(e) => this.submit(e)}>搜索</div>
+                                        {
+                                            submit == true && associatedDetails != "" ?
+                                                <div className="published">
+                                                    <p>
+                                                        <span>ID号</span>
+                                                        <span>{associatedDetails.id}</span>
+                                                    </p>
+                                                    <p>
+                                                        <span>中标主题</span>
+                                                        <span>{associatedDetails.title}</span>
+                                                    </p>
+                                                    <p className={details.ok_status == 200 ? "published" : "unpublish"}>
+                                                        <span>发布状态</span>
+                                                        <span className="item"></span>
+                                                    </p>
+                                                    <p>
+                                                        <span>提交时间</span>
+                                                        <span>{util.formatDate(util.date(associatedDetails.publish_date))}</span>
+                                                    </p>
+                                                    <div className="btn btn-y"  onClick={(e) => this.relation(associatedDetails.id)}>关联
+                                                    </div>
+                                                </div>
+                                                : null
+                                        }
+                                    </div>
+                                :null
+                            }
+                            {
+                                zbgsId!=""&&value==""?
                                 <div className="published">
                                     <p>
                                         <span>ID号</span>
-                                        <span></span>
+                                        <span>{associatedDetails.id}</span>
                                     </p>
                                     <p>
                                         <span>中标主题</span>
-                                        <span></span>
+                                        <span>{associatedDetails.title}</span>
                                     </p>
                                     <p className={details.ok_status == 200 ? "published" : "unpublish"}>
                                         <span>发布状态</span>
@@ -73,32 +108,13 @@ class Management extends React.Component {
                                     </p>
                                     <p>
                                         <span>提交时间</span>
-                                        <span>2016-12-18</span>
+                                        <span>{util.formatDate(util.date(associatedDetails.publish_date))}</span>
                                     </p>
-                                    <div className="btn btn-y">关联招标</div>
+                                    <div className="btn btn-w" onClick={(e) => this.unRelation(e)}>取消关联</div>
                                 </div>
-                            {/*
-                                < div  className="published">
-                                <p>
-                                <span>ID号</span>
-                                <span>30569678</span>
-                                </p>
-                                <p>
-                                <span>中标主题</span>
-                                <span>天上一道打火帘，莫非上帝想抽烟</span>
-                                </p>
-                                <p>
-                                <span>发布状态</span>
-                                <span className="item"></span>
-                                </p>
-                                <p>
-                                <span>提交时间</span>
-                                <span>2016-12-18</span>
-                                </p>
-                                <div className="btn btn-w">取消关联</div>
-                                </div>
-                            */}
-                            <div className="btn btn-close">关闭</div>
+                                    :null
+                            }
+                            <div className="btn btn-close" onClick={(e) => this.associatedMc(e)}>关闭</div>
                         </div>
                     </div>
                     {/*查看详情*/}
@@ -256,31 +272,132 @@ class Management extends React.Component {
     }
     //关联
     changeAssociated(e){
+        let _this=this;
+        let data = {"id":e};
+        util.postRequest('/getRelation',data).then(body=>{
+            body.json().then(
+                json => {
+                    this.setState({
+                        zbgsId:json.state,
+                        //zbgsId:2
+                    });
+                    //if(this.state.zbgsId){
+                    if(json.state!=""){
+                        _this.associatedDetails(json.state);
+                    }
+                })
+        });
         this.setState({
-            associated:true
+            associated:true,
+            id:e
+        })
+    }
+    //关联的信息
+    associatedDetails(id){
+        let data = {"id":id};
+        util.postRequest('/messageDetails',data).then(body=> {
+            body.json().then(
+                json => {
+                    if(json.state==""){
+                        this.setState({
+                            hidePro:true,
+                            textPro:'',
+                            hide:false,
+                            text:'没有此条信息'
+                        })
+                    }else{
+                        this.setState({
+                            associatedDetails:json
+                        })
+                    }
+                })
+        })
+    }
+    //取消关联
+    unRelation(e){
+        let {id,zbgsId} = this.state;
+        let data = {"zbggId":id,"zbgsId":zbgsId};
+        util.postRequest('/unRelation',data).then(body=>{
+            body.json().then(
+                json =>{
+                    if(json.state=="ok"){
+                        this.setState({
+                            hidePro:true,
+                            textPro:'',
+                            hide:false,
+                            associatedDetails:'',
+                            text:'取消成功',
+                            zbgsId:''
+                        });
+                        this.associatedMc(e)
+                    }else{
+                        this.setState({
+                            hidePro:true,
+                            textPro:'',
+                            hide:false,
+                            associatedDetails:'',
+                            zbgsId:'',
+                            text:'网络繁忙，请稍后再试'
+                        });
+                        this.associatedMc(e)
+                    }
+                }
+            )
         })
     }
     //关联蒙层
     associatedMc(e){
        this.setState({
-           associated:false
+           associated:false,
+           associatedDetails:'',
+           submit:false,
+           value:''
        })
     }
     //input赋值
     associatedChange(e){
-        if ( e && e.stopPropagation ) {
-            e.stopPropagation();
-            this.setState({
-                value:e.target.value
-            })
-        }
+        this.setState({
+            value:e.target.value
+        })
     }
     //点击搜索
     submit(e){
-        if ( e && e.stopPropagation ) {
-            e.stopPropagation();
-            console.log(1);
+        this.setState({
+           submit:true
+        });
+        let {value} = this.state;
+        if(value!=""){
+            this.associatedDetails(value);
         }
+    }
+    //点击关联
+    relation(id){
+        let {value} = this.state;
+        let data = {"zbggId":id,"zbgsId":value};
+        util.postRequest('/relation',data).then(body=>{
+            body.json().then(
+                json =>{
+                    if(json.state=="ok"){
+                        this.setState({
+                            hidePro:true,
+                            textPro:'',
+                            hide:false,
+                            associatedDetails:'',
+                            text:'关联成功',
+                            zbgsId:''
+                        });
+                    }else{
+                        this.setState({
+                            hidePro:true,
+                            textPro:'',
+                            hide:false,
+                            associatedDetails:'',
+                            zbgsId:'',
+                            text:'网络繁忙，请稍后再试'
+                        });
+                    }
+                })
+        })
     }
 }
 render(
