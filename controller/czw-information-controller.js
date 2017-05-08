@@ -144,7 +144,7 @@ module.exports = {
     },
     Register:function *(next){
         var data = this.request.body;
-        var url = server + '/httpserver.member.Regist/regist?username='+data.username+'&password='+data.password+'&pwd='+data.passwordAgain+'&company='+data.company+'&contact='+data.contact+'&tphone='+data.tphone+'&mphone='+data.tel+'&email='+data.email;
+        var url = server + '/httpserver.member.Regist/regist?username='+data.username+'&password='+data.password+'&pwd='+data.passwordAgain+'&company='+encodeURIComponent(data.company)+'&contact='+encodeURIComponent(data.contact)+'&tphone='+data.tphone+'&mphone='+data.tel+'&email='+data.email;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -203,8 +203,8 @@ module.exports = {
         var attrs = attr[0].split('_');
         var oldPath = file.files[attr[0]].path;
 
-        var filePath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/';
-        var newPath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
+        var filePath = '/app/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/';
+        var newPath = '/app/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
         createFolder(newPath);
 
         var Attrs = fs.readdirSync(filePath);
@@ -212,7 +212,7 @@ module.exports = {
             fs.renameSync(oldPath, newPath)
         }else{
             fs.unlinkSync(newPath);
-            var newPath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
+            var newPath = '/app/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
             fs.renameSync(oldPath, newPath)
         }
         this.body={status:'1'};

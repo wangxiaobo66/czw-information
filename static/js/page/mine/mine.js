@@ -85,8 +85,9 @@ class Mine extends React.Component {
     }
     componentDidMount() {
         let WXFBSESSIONID = util.localStorage('get','WXFBSESSIONID');
+        console.log(WXFBSESSIONID,"**");
         let _this = this;
-        if(WXFBSESSIONID){
+        if(WXFBSESSIONID&&WXFBSESSIONID!="undefined"){
             let data = {"WXFBSESSIONID":WXFBSESSIONID};
             util.postRequest('/getUserMine',data).then(body=>{
                 body.json().then(

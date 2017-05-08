@@ -135,6 +135,7 @@ class Companyinfo extends React.Component {
     componentDidMount() {
         //获取WXFBSESSIONID的值
         let WXFBSESSIONID = util.localStorage('get','WXFBSESSIONID');
+        console.log(WXFBSESSIONID,"**");
         this.setState({
             WXFBSESSIONID:WXFBSESSIONID
         });
@@ -247,7 +248,12 @@ class Companyinfo extends React.Component {
                                         code: 'code'
                                     });
                                     break;
+
                             }
+                            this.setState({
+                               text:'图片上传成功',
+                                hide:false
+                            });
                             //for枢波
                             /*
                             let data = {"fileName":fileName};
@@ -347,7 +353,7 @@ class Companyinfo extends React.Component {
                         hide:false
                     })
                 }else{
-                    data = {"id_type":idType,"is_three":isThree,"code":code+".jpg","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":""};
+                    data = {"WXFBSESSIONID":WXFBSESSIONID,"id_type":idType,"is_three":isThree,"code":code+".jpg","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":""};
                     util.postRequest('/upload',data).then(body => {
                         body.json().then(
                             json => {
@@ -363,7 +369,7 @@ class Companyinfo extends React.Component {
                     hide:false
                 })
             }else{
-                data = {"id_type":idType,"is_three":isThree,"code":"","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":ggsmj+".jpg"};
+                data = {"WXFBSESSIONID":WXFBSESSIONID,"id_type":idType,"is_three":isThree,"code":"","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":ggsmj+".jpg"};
                 util.postRequest('/upload',data).then(body => {
                     body.json().then(
                         json => {

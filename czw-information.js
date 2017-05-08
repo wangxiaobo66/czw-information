@@ -31,7 +31,7 @@ router.get('/img',czwInformationController.img);//预览图片接口
 router.post('/getWXFBSESSIONID',koaBody,czwInformationController.getWXFBSESSIONID);//获取WXFBSESSIONID信息
 router.post('/getUser',koaBody,czwInformationController.getUser);//获取用户信息
 router.post('/userQuery',koaBody,czwInformationController.userQuery);//查询采招网账户是否可用
-router.post('/register',koaBody,czwInformationController.Register);//注册到采招网,并保存到数据库
+router.post('/Register',koaBody,czwInformationController.Register);//注册到采招网,并保存到数据库
 router.post('/login',koaBody,czwInformationController.login);//用父账号登录
 router.post('/binding',koaBody,czwInformationController.binding);//子账号与父账号相关联
 router.post('/upload',koaBody,czwInformationController.upload);//上传相关图片（给枢波）

@@ -263,7 +263,8 @@ class Register extends React.Component {
                             this.setState({
                                 text:'注册成功！',
                                 hide:false
-                            })
+                            });
+                            window.location.href="/login";
                         }else{
                             this.setState({
                                 text:'网络异常请稍后再试',
