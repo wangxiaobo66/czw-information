@@ -15,7 +15,8 @@ class Login extends React.Component {
             username:'',
             password:'',
             text:'',
-            hide:true
+            hide:true,
+            WXFBSESSIONID:''
         }
     }
     render() {
@@ -36,14 +37,17 @@ class Login extends React.Component {
                 <p className="ph">请登录微信绑定，可查看用户信息</p>
                 <a className="btn btn-wx" href="javascript:;" onClick={(e) => this.click(e)}>绑定微信</a>
                 <a className="btn-sub" href="/register">立即注册</a>
-                <a className="btn-fp" href="">忘记密码?</a>
+                <a className="btn-fp" href="tel:400-006-6655">忘记密码?请拨打客服电话</a>
             </div>
                 <Capacity text={text} hide={hide} changeHide={(e) => this.changeHide(e)}/>
             </div>
         )
     }
     componentDidMount() {
-
+        //获取WXFBSESSIONID的值
+        this.setState({
+            WXFBSESSIONID:util.localStorage('get','WXFBSESSIONID')
+        })
     }
     //弹框回调
     changeHide(e){
@@ -93,7 +97,7 @@ class Login extends React.Component {
     }
     //点击提交各种判断
     click(e){
-        let {username,password} = this.state;
+        let {username,password,WXFBSESSIONID} = this.state;
         if(password==''){
             this.setState({
                 text:'请输入您的账户密码',
@@ -107,7 +111,7 @@ class Login extends React.Component {
             })
         }
         if(username!=''&&password!=''){
-            let data = {"username":username,"password":password};
+            let data = {"username":username,"password":password,"WXFBSESSIONID":WXFBSESSIONID};
             util.postRequest('/login',data).then(body=>{
                 body.json().then(
                     json => {

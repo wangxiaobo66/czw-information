@@ -5,8 +5,9 @@ var formParse = require('co-busboy');
 var fetch = require('node-fetch');
 var fs = require('fs');
 var path = require('path');
-var server = 'http://test-wxinfopub.chinabidding.cn';
-var WXFBSESSIONID = 'oGx7pt8VmTwCQ9ghpCyE9DLua-fE';
+//var server = 'http://test-wxinfopub.chinabidding.cn';
+var server = 'http://127.0.0.1:9100';
+//var WXFBSESSIONID = 'oGx7pt8VmTwCQ9ghpCyE9DLua-fE';
 /*
 * username:zhanghaitao
 * password:b2YzmSfn1vGkL
@@ -59,7 +60,8 @@ module.exports = {
         this.body = json
     },
     getUser:function *(next){
-        var url = server + '/httpserver.wx.Weixin/getUserWxWxfbSession?WXFBSESSIONID=' + WXFBSESSIONID;
+        var data = this.request.body;
+        var url = server + '/httpserver.wx.Weixin/getUserWxWxfbSession?WXFBSESSIONID=' + data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -71,7 +73,8 @@ module.exports = {
         this.body = json
     },
     getUserMine:function *(next){
-        var url = server + '/httpserver.member.Login/getUserZbwWxfbSession?WXFBSESSIONID='+WXFBSESSIONID;
+        var data = this.request.body;
+        var url = server + '/httpserver.member.Login/getUserZbwWxfbSession?WXFBSESSIONID='+data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -83,7 +86,8 @@ module.exports = {
         this.body = json
     },
     unLogin:function *(next){
-        var url = server + '/httpserver.member.Login/unlogin?WXFBSESSIONID='+WXFBSESSIONID;
+        var data = this.request.body;
+        var url = server + '/httpserver.member.Login/unlogin?WXFBSESSIONID='+data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -96,7 +100,7 @@ module.exports = {
     },
     tongJi:function *(next){
         var data = this.request.body;
-        var url = server + '/httpserver.info.Info/tongji?WXFBSESSIONID='+WXFBSESSIONID+'&time='+data.time;
+        var url = server + '/httpserver.info.Info/tongji?WXFBSESSIONID='+data.WXFBSESSIONID+'&time='+data.time;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -105,6 +109,24 @@ module.exports = {
             console.log(error)
         });
         var json = yield JSON.parse(result);
+        this.body = json
+    },
+    tongji2:function *(next){
+        var data = this.request.body;
+        var url = server + '/httpserver.info.Info/tongji2?WXFBSESSIONID='+data.WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json;
+        if(result==""){
+            json = {"state":""};
+        }else{
+            json = yield JSON.parse(result);
+        }
         this.body = json
     },
     userQuery:function *(next){
@@ -135,7 +157,7 @@ module.exports = {
     },
     binding:function *(next){
         var data = this.request.body;
-        var url = server + '/httpserver.member.Login/login3?username='+data.username+'&real_name='+data.realName+'&tel='+data.tel+'&zhiwei='+data.select+'&email='+data.email+'&WXFBSESSIONID=' + WXFBSESSIONID;
+        var url = server + '/httpserver.member.Login/login3?username='+data.username+'&real_name='+data.realName+'&tel='+data.tel+'&zhiwei='+data.select+'&email='+data.email+'&WXFBSESSIONID=' + data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -148,7 +170,7 @@ module.exports = {
     },
     login:function*(next){
         var data = this.request.body;
-        var url = server + '/httpserver.member.Login/login?username='+data.username+'&password='+data.password+'&WXFBSESSIONID=' + WXFBSESSIONID;
+        var url = server + '/httpserver.member.Login/login?username='+data.username+'&password='+data.password+'&WXFBSESSIONID=' + data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -160,7 +182,8 @@ module.exports = {
         this.body = json
     },
     getState:function*(next){
-        var url  = server + '/httpserver.member.Other/getUserZzWxfbSession?WXFBSESSIONID='+WXFBSESSIONID;
+        var data = this.request.body;
+        var url  = server + '/httpserver.member.Other/getUserZzWxfbSession?WXFBSESSIONID='+data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -228,7 +251,7 @@ module.exports = {
     upload:function*(next){//给枢波
         //data = {"id_type":idType,"is_three":isThree,"code":code+".jpg","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":""};
         var data = this.request.body;
-        var url = server + '/httpserver.member.Other/setZizhi?WXFBSESSIONID='+WXFBSESSIONID+'&is_three='+data.is_three+'&id_type='+data.id_type+'&code='+data.code+'&yyzz='+data.yyzz+'&zzjgdmz='+data.zzjgdmz+'&swdjz='+data.swdjz+'&daili_zz='+data.daili_zz+'&first_info='+data.first_info;
+        var url = server + '/httpserver.member.Other/setZizhi?WXFBSESSIONID='+data.WXFBSESSIONID+'&is_three='+data.is_three+'&id_type='+data.id_type+'&code='+data.code+'&yyzz='+data.yyzz+'&zzjgdmz='+data.zzjgdmz+'&swdjz='+data.swdjz+'&daili_zz='+data.daili_zz+'&first_info='+data.first_info;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -241,7 +264,7 @@ module.exports = {
     },
     messageList:function*(next){
         var data = this.request.body;
-        var url = server + '/httpserver.info.Info/getMoreInfoOneMember?type='+data.type+'&page='+data.page+'&rp='+data.rp+'&WXFBSESSIONID='+WXFBSESSIONID;
+        var url = server + '/httpserver.info.Info/getMoreInfoOneMember?type='+data.type+'&page='+data.page+'&rp='+data.rp+'&WXFBSESSIONID='+data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -254,7 +277,7 @@ module.exports = {
     },
     messageDetails:function*(next){
         var data = this.request.body;
-        var url = server + '/httpserver.info.Info/getOneInfoOneMember?WXFBSESSIONID='+WXFBSESSIONID+'&id='+data.id;
+        var url = server + '/httpserver.info.Info/getOneInfoOneMember?WXFBSESSIONID='+data.WXFBSESSIONID+'&id='+data.id;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -272,7 +295,7 @@ module.exports = {
     },
     messageDelete:function*(next){
         var data = this.request.body;
-        var url = server + '/httpserver.info.Info/delOneInfoOneMember?WXFBSESSIONID='+WXFBSESSIONID+'&id='+data.id;
+        var url = server + '/httpserver.info.Info/delOneInfoOneMember?WXFBSESSIONID='+data.WXFBSESSIONID+'&id='+data.id;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -290,7 +313,7 @@ module.exports = {
     },
     getRelation:function*(next){
         var data = this.request.body;
-        var url = server + '/httpserver.info.Info/getRelationZbgs?WXFBSESSIONID='+WXFBSESSIONID+'&id_zbgg='+data.id;
+        var url = server + '/httpserver.info.Info/getRelationZbgs?WXFBSESSIONID='+data.WXFBSESSIONID+'&id_zbgg='+data.id;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -309,7 +332,7 @@ module.exports = {
     },
     relation:function*(next){
         var data = this.request.body;
-        var url = server + '/httpserver.info.Info/relationZbgs?WXFBSESSIONID='+WXFBSESSIONID+'&id_zbgg='+data.zbggId+'&id_zbgs='+data.zbgsId;
+        var url = server + '/httpserver.info.Info/relationZbgs?WXFBSESSIONID='+data.WXFBSESSIONID+'&id_zbgg='+data.zbggId+'&id_zbgs='+data.zbgsId;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -327,7 +350,7 @@ module.exports = {
     },
     unRelation:function*(next){
         var data = this.request.body;
-        var url = server + '/httpserver.info.Info/unrelationZbgs?WXFBSESSIONID='+WXFBSESSIONID+'&id_zbgg='+data.zbggId+'&id_zbgs='+data.zbgsId;
+        var url = server + '/httpserver.info.Info/unrelationZbgs?WXFBSESSIONID='+data.WXFBSESSIONID+'&id_zbgg='+data.zbggId+'&id_zbgs='+data.zbgsId;
         var result = yield postFetch(url).then(
             body =>{
                 return body;

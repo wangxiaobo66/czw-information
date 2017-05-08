@@ -9,7 +9,12 @@
  * 3. Prevent adjustments of font size after orientation changes in
  *    IE on Windows Phone and in iOS.
  */
-
+*{
+    -webkit-touch-callout:none; 
+    -webkit-user-select:none; 
+    -moz-user-select:none;
+    user-select:none;
+}
 html {
   font-family: sans-serif; /* 1 */
   line-height: 1.15; /* 2 */
@@ -19,6 +24,7 @@ html {
 
 body {
   margin: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 article,
@@ -315,7 +321,7 @@ a,a:hover, a:visited, a:link, a:active {
 }
 .mc {
   display: block;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -328,7 +334,7 @@ a,a:hover, a:visited, a:link, a:active {
 }
 .tip-contaner {
   width: 8rem;
-  padding: 1rem;
+  padding: .8rem;
   background-color: #fff;
   position: absolute;
   top: 50%;
@@ -354,8 +360,7 @@ a,a:hover, a:visited, a:link, a:active {
   color: #333;
 }
 .tip-contaner .quest {
-  height: 2.4rem;
-  line-height: 2.4rem;
+  padding: .8rem 0;
   font-size: 0.4266666667rem;
 }
 .flex-row {

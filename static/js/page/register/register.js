@@ -21,7 +21,8 @@ class Register extends React.Component {
             contact:'',
             tphone:'',
             text:'',
-            hide:true
+            hide:true,
+            WXFBSESSIONID:''
         }
     }
     render() {
@@ -70,7 +71,10 @@ class Register extends React.Component {
         )
     }
     componentDidMount() {
-
+        let username = util.localStorage('get','username');
+        this.setState({
+            WXFBSESSIONID:util.localStorage('get','WXFBSESSIONID')
+        });
     }
     //弹框回调
     changeHide(e){

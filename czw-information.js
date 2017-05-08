@@ -21,6 +21,7 @@ router.get('/companyinfo',routerController.companyinfo);//公司信息
 router.get('/management',routerController.management);//信息管理
 router.get('/mine',routerController.mine);//我的
 router.get('/binding',routerController.binding);//微信绑定
+router.get('/announce',routerController.announce);//信息发布导视
 
 //接口配置
 //测试
@@ -46,6 +47,7 @@ router.post('/getUserMine',koaBody,czwInformationController.getUserMine);//获�
 router.post('/unLogin',koaBody,czwInformationController.unLogin);//解绑微信
 router.post('/tongJi',koaBody,czwInformationController.tongJi);//统计信息/httpserver.info.Info/tongji?WXFBSESSIONID=&time=   time -1 表示全部 0当月-自然月 1上一个月-自然月 2上上一个月自然月   12 ,往前数第12个自然月 没有其它值 默认为0 当月统计
 //统计接口 按月 招标 中标 采购   创建时间?  发布日期     1010 1020 2000
+router.post('/tongji2',koaBody,czwInformationController.tongji2);
 
 
 app

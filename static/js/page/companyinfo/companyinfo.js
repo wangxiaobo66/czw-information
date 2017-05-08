@@ -25,12 +25,14 @@ class Companyinfo extends React.Component {
             swdjz: '',//税务登记证
             code: '',//三证合一时的营业执照
             text: '',
-            hide: true
+            hide: true,
+            zzFlag:'',
+            WXFBSESSIONID:''
         }
     }
 
     render() {
-        let {idType, companyName, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide} = this.state;
+        let {idType, companyName, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide,zzFlag} = this.state;
         return (
             <div className="module-companyinfo">
                 <div className="Company">
@@ -43,15 +45,17 @@ class Companyinfo extends React.Component {
                     </div>
                     <div className="list cl">
                         <span className="red fl">*</span><span className="fl">公司名称</span>
-                        {
-                            companyName == '' ?
-                                <input type="text" name="companyName" value={companyName}/>
-                                :
-                                <div>
-                                    <span className="item oh">{companyName}</span>
-                                    <span className="un-id">(未认证)</span>
-                                </div>
-                        }
+                        <div>
+                            <span className="item oh">{companyName}</span>
+                            {
+                                zzFlag==''?''
+                                    :
+                                    zzFlag=="F"?
+                                        <span className="un-id">(未认证)</span>
+                                        :<span className="un-id">(已认证)</span>
+                            }
+
+                        </div>
 
                     </div>
                     {
@@ -119,6 +123,9 @@ class Companyinfo extends React.Component {
                     <div className="btn btn-sub" onClick={(e) => this.click(e)}>
                         提交
                     </div>
+                    <a className="btn btn-sub" href="/mine">
+                        返回
+                    </a>
                 </div>
                 <Capacity text={text} hide={hide} changeHide={(e) => this.changeHide(e)}/>
             </div>
@@ -126,17 +133,52 @@ class Companyinfo extends React.Component {
     }
 
     componentDidMount() {
-        util.postRequest('/getState').then(body => {
+        //获取WXFBSESSIONID的值
+        let WXFBSESSIONID = util.localStorage('get','WXFBSESSIONID');
+        this.setState({
+            WXFBSESSIONID:WXFBSESSIONID
+        });
+        let _this = this;
+        let data = {"WXFBSESSIONID":WXFBSESSIONID};
+        util.postRequest('/getState',data).then(body => {
             body.json().then(
                 json => {
-                    this.setState({
-                        companyName: json.company_name,
-                        fId: json.f_id
+                    _this.setState({
+                        companyName:json.company_name,
+                        fId:json.f_id
                     });
+                    if(json.zz_id!=null){//有数据 已经上传
+                        if(json.id_type==1){//招标代理
+                            console.log(1,"招标代理");
+                            if(json.is_three==0){//三证合一
+                                console.log(1,"三证合一");
+                                _this.setState({
+                                    idType:1,
+                                    isThree:0,
+                                    code:json.code
+                                })
+                            }else{//三证不合一
+                                console.log(1,"三证不合一");
+                                _this.setState({
+                                    idType:1,
+                                    isThree:1,
+                                    zzjgdmz:json.zzjgdmz,//组织机构证
+                                    gszz:json.yyzz,//营业执照
+                                    dlzz:json.daili_zz,//代理资质
+                                    swdjz:json.swdjz,//税务登记证
+                                })
+                            }
+                        }else if(json.id_type==2){//招标业主
+                            console.log(2,"招标业主");
+                            _this.setState({
+                                idType:2,
+                                ggsmj:json.first_info
+                            })
+                        }
+                    }
+                    //无数据不用做任何处理
                 })
         });
-        let theRequest = util.GetRequest();
-        //alert(theRequest.code);
     }
 
 
@@ -251,7 +293,7 @@ class Companyinfo extends React.Component {
     }
     //点击提交
     click(e){
-        let {idType, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide} = this.state;
+        let {idType, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide,WXFBSESSIONID} = this.state;
         /*
          //004 is_three        bigint(11) NOT NULL DEFAULT '0',   0-表示三证合一  1-表示三证不合一
          //005 code            varchar(200) NULL 三证合一代码
@@ -290,7 +332,7 @@ class Companyinfo extends React.Component {
                     })
                 }
                 if(dlzz!=""&&zzjgdmz!=""&&swdjz!=""&&gszz!=""){
-                    data = {"id_type":idType,"is_three":isThree,"code":"","yyzz":gszz+".jpg","zzjgdmz":zzjgdmz+".jpg","swdjz":swdjz+".jpg","daili_zz":dlzz+".jpg","first_info":""};
+                    data = {"WXFBSESSIONID":WXFBSESSIONID,"id_type":idType,"is_three":isThree,"code":"","yyzz":gszz+".jpg","zzjgdmz":zzjgdmz+".jpg","swdjz":swdjz+".jpg","daili_zz":dlzz+".jpg","first_info":""};
                     util.postRequest('/upload',data).then(body => {
                         body.json().then(
                             json => {

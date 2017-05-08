@@ -45,7 +45,6 @@ export class Details extends React.Component {
                                 <div className="btn btn-w" name="associated" id={details.id} onClick={(e) => this.click(e)}>关联</div>
                                 :null
                     }
-
                 </div>
             </li>
         )
@@ -69,7 +68,9 @@ export class Details extends React.Component {
         }
     }
     details(id){//查看详情
-        let data = {"id":id};
+        let WXFBSESSIONID = util.localStorage('get','WXFBSESSIONID');
+        console.log(WXFBSESSIONID,'**');
+        let data = {"id":id,"WXFBSESSIONID":WXFBSESSIONID};
         util.postRequest('/messageDetails',data).then(body=> {
             body.json().then(
                 json => {

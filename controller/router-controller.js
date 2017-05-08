@@ -25,5 +25,8 @@ module.exports = {
     },
     binding: function *(next){//微信绑定
         this.body = yield  render('../dist/template/binding.html');
+    },
+    announce: function *(next){
+        this.body = yield  render('../dist/template/ann.html');
     }
 };

@@ -9,7 +9,10 @@ const uglify = require('gulp-uglify');
 const webpack = require('gulp-webpack');
 const watch = require('gulp-watch');
 const rev = require('gulp-rev');
+const revCollector = require('gulp-rev-collector');
+const clean = require('gulp-clean');
 const webpackConfig = require('./webpack.config.js');
+
 //图片路径
 const imgPath = '/data/upload';
 /*向服务器提交*/
@@ -19,15 +22,40 @@ var host = '139.198.1.219',
     dest = '/app/czw-information',
     port = 22004;
 /**/
-gulp.task('distJs', function () {
+gulp.task('distJs',['clean'], function () {
     'use strict';
     return gulp.src('./static/js/page/**/*.js')
         .pipe(webpack(webpackConfig))
         //.pipe(uglify())
+        .pipe(rev())
         .pipe(gulp.dest('./dist/js'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('./controller/'))
         .on('error', function (err) {
             console.log(err);
         });
+});
+gulp.task('clean',function(){
+    'use strict';
+        gulp.src('./dist/js/')
+            .pipe(clean({force: true}))
+});
+gulp.task('revC',function(){
+    'use strict';
+    gulp.src(['./controller/*.json','dist/template/*.html'])
+        .pipe(revCollector({
+            replaceReved: true
+        }))
+        .pipe(gulp.dest('dist/template/'))
+});
+gulp.task('rev',function(){
+    'use strict';
+    gulp.src(['dist/js/*'])
+        .pipe(rev())
+        .pipe(gulp.dest('dist/js/'))//.pipe管道,流的形式输出输入
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('./controller/'))
+
 });
 gulp.task('distImg', function () {
     'use strict';
@@ -40,7 +68,7 @@ gulp.task('distImg', function () {
 gulp.task('distThird', function () {
     'use strict';
     return gulp.src('./static/js/third/*')
-        .pipe(gulp.dest('./dist/js'))
+        .pipe(gulp.dest('./dist/third/'))
         .on('error', function (err) {
             console.log(err);
         });
@@ -78,12 +106,26 @@ gulp.task('watchJs',function(){
     });
 });
 
-gulp.task('appText', ['distJs', 'distImg','distThird','distHtml','distCss','distFont']);
+gulp.task('appText', ['distJs', 'distImg','distHtml','distThird','distCss','distFont']);
 
-gulp.task('server',function(){
+gulp.task('server',['revC'],function(){
     'use strict';
     return gulp.src(['./**/*','!./node_modules/**/*','!./static/**/*','!./template/**/*','!./.gitignore','!./README.md','!./gulpfile.js','!./webpack.config.js'])
     //return gulp.src(['./dist/**/*','./controller/*','czw-information.js','package.json'])
+        .pipe(scp({
+            host: host,
+            username: username,
+            password: password,
+            dest: dest,
+            port:port
+        }))
+        .on('error', function(err) {
+            console.log(err);
+        });
+});
+gulp.task('serverPart',['revC'],function(){
+    'use strict';
+    return gulp.src(['./**/*','!./node_modules/**/*','!./static/**/*','!./template/**/*','!./.gitignore','!./README.md','!./gulpfile.js','!./webpack.config.js','!./dist/css/**/*','!./dist/font/**/*','!./dist/img/**/*','!./dist/third/**/*'])
         .pipe(scp({
             host: host,
             username: username,

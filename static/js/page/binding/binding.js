@@ -18,7 +18,8 @@ class Binding extends React.Component {
             email:'',
             select:'',
             text:'',
-            hide:true
+            hide:true,
+            WXFBSESSIONID:''
         }
     }
 
@@ -61,11 +62,16 @@ class Binding extends React.Component {
     componentDidMount() {
         let username = util.localStorage('get','username');
         this.setState({
-            username:username
-        })
+            username:username,
+            WXFBSESSIONID:util.localStorage('get','WXFBSESSIONID')
+        });
     }
     //弹框回调
     changeHide(e){
+        let{text} = this.state;
+        if(text == "绑定成功"){
+            window.location.href = "/mine"
+        }
         if(e){
             this.setState({
                 text:'',
@@ -122,7 +128,7 @@ class Binding extends React.Component {
         }
     }
     click(e){
-        let {username,realName,tel,email,select} =this.state;
+        let {username,realName,tel,email,select,WXFBSESSIONID} =this.state;
         if(select==''){
             this.setState({
                 text:'请选择职位',
@@ -148,7 +154,7 @@ class Binding extends React.Component {
             })
         }
         if(username!=''&&realName!=''&&select!=''&&tel!=''&&util.match.mobile.reg.test(tel)&&email!=''&&util.match.email.reg.test(email)){
-            let data = {"username":username,"realName":realName,"select":select,"tel":tel,"email":email};
+            let data = {"username":username,"realName":realName,"select":select,"tel":tel,"email":email,"WXFBSESSIONID":WXFBSESSIONID};
             util.postRequest('/binding',data).then(body=>{
                 body.json().then(
                     json => {
@@ -158,35 +164,35 @@ class Binding extends React.Component {
                                 hide:false
                             })
                         }
-                        if(json.state==-5){
+                        if(json.status==-5){
                             this.setState({
                                 text:'采招网父账号为空',
                                 hide:false
                             })
                         }
-                        if(json.state==-6){
+                        if(json.status==-6){
                             this.setState({
                                 text:'此邮箱已被占用',
                                 hide:false
                             })
                         }
-                        if(json.state==-21){
+                        if(json.status==-21){
                             this.setState({
                                 text:'生成用户失败，请稍后再试',
                                 hide:false
                             })
                         }
-                        if(json.state<0&&json.state!=-4&&json.state!=-5&&json.state!=-6&&json.state!=-21){
+                        if(json.status<0&&json.status!=-4&&json.status!=-5&&json.status!=-6&&json.status!=-21){
                             this.setState({
                                 text:'网络异常，请稍后再试',
                                 hide:false
                             })
                         }
-                        if(json.state==1){
+                        if(json.status==1){
                             this.setState({
                                 text:'绑定成功',
                                 hide:false
-                            })
+                            });
                         }
                     })
             })

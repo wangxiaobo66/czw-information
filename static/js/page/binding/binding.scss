@@ -14,14 +14,13 @@
   .input-under-line {
     border: none;
     width: 100%;
-    height: 1.4rem;
-    line-height: 1.4rem;
     border-bottom: 1px solid #d9d9d9;
-    padding-left: 0.6666666667rem;
+    padding:.55rem 0 .4rem 0.67rem;
+    -webkit-appearance: none;
+    background-color: transparent;
   }
   .input-under-line.zhiwei {
     color: #999;
-    background-color:#fff;
   }
   .ph {
     color: #999;

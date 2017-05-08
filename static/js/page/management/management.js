@@ -29,7 +29,8 @@ class Management extends React.Component {
             id:'',
             zbgsId:'',
             associatedDetails:'',
-            submit:false
+            submit:false,
+            WXFBSESSIONID:''
         }
     }
     render() {
@@ -148,16 +149,39 @@ class Management extends React.Component {
             </div>
         )
     }
-    //初始加载
     componentDidMount() {
         let theRequest = util.GetRequest();
-        this.initial();
+        let data = {"code":theRequest.code};
+        console.log(data);
+        let _this=this;
+        util.postRequest('/getWXFBSESSIONID',data).then(body=>{
+            body.json().then(
+                json =>{
+                    util.localStorage('set','WXFBSESSIONID',json.wxfbSession);
+                    let WXFBSESSIONID = json.wxfbSession;
+                    _this.setState({
+                        WXFBSESSIONID:WXFBSESSIONID
+                    });
+                    let data = {"WXFBSESSIONID":WXFBSESSIONID};
+                    util.postRequest('/getUserMine',data).then(body=>{
+                        body.json().then(
+                            json =>{
+                                if(json.status!=1){
+                                    window.location.href='/login';
+                                }else{
+                                    this.initial()
+                                }
+                            })
+                    });
+                })
+        });
+        //this.initial();
     }
     //初始加载
     initial(){
-        let {page,type} = this.state;
+        let {page,type,WXFBSESSIONID} = this.state;
         //alert(theRequest.code);
-        let data = {"type":type,"page":page,"rp":8};//1010招标 1020中标 2000采购
+        let data = {"type":type,"page":page,"rp":8,"WXFBSESSIONID":WXFBSESSIONID};//1010招标 1020中标 2000采购
         util.postRequest('/messageList',data).then(body=>{
             body.json().then(
                 json =>{
@@ -174,8 +198,8 @@ class Management extends React.Component {
     }
     //加载更多
     clickMore(e){
-        let {page,type,list} = this.state;
-        let data = {"type":type,"page":page+1,"rp":8};//1010招标 1020中标 2000采购
+        let {page,type,list,WXFBSESSIONID} = this.state;
+        let data = {"type":type,"page":page+1,"rp":8,"WXFBSESSIONID":WXFBSESSIONID};//1010招标 1020中标 2000采购
         util.postRequest('/messageList',data).then(body=>{
             body.json().then(
                 json =>{
@@ -196,8 +220,8 @@ class Management extends React.Component {
         this.setState({
             type:name
         });
-        let{page} = this.state;
-        let data = {"type":name,"page":page,"rp":8};//1010招标 1020中标 2000采购
+        let{page,WXFBSESSIONID} = this.state;
+        let data = {"type":name,"page":page,"rp":8,"WXFBSESSIONID":WXFBSESSIONID};//1010招标 1020中标 2000采购
         util.postRequest('/messageList',data).then(body=>{
             body.json().then(
                 json =>{
@@ -233,8 +257,9 @@ class Management extends React.Component {
     }
     changeClick(e){
         let _this = this;
+        let {WXFBSESSIONID} = this.state;
         if(e=="confirm"){
-            let data = {"id":this.state.id};
+            let data = {"id":this.state.id,"WXFBSESSIONID":WXFBSESSIONID};
             util.postRequest('/messageDelete',data).then(body=>{
                 body.json().then(
                     json => {
@@ -273,7 +298,8 @@ class Management extends React.Component {
     //关联
     changeAssociated(e){
         let _this=this;
-        let data = {"id":e};
+        let {WXFBSESSIONID} = this.state;
+        let data = {"id":e,"WXFBSESSIONID":WXFBSESSIONID};
         util.postRequest('/getRelation',data).then(body=>{
             body.json().then(
                 json => {
@@ -294,7 +320,8 @@ class Management extends React.Component {
     }
     //关联的信息
     associatedDetails(id){
-        let data = {"id":id};
+        let {WXFBSESSIONID} = this.state;
+        let data = {"id":id,"WXFBSESSIONID":WXFBSESSIONID};
         util.postRequest('/messageDetails',data).then(body=> {
             body.json().then(
                 json => {
@@ -315,8 +342,8 @@ class Management extends React.Component {
     }
     //取消关联
     unRelation(e){
-        let {id,zbgsId} = this.state;
-        let data = {"zbggId":id,"zbgsId":zbgsId};
+        let {id,zbgsId,WXFBSESSIONID} = this.state;
+        let data = {"zbggId":id,"zbgsId":zbgsId,"WXFBSESSIONID":WXFBSESSIONID};
         util.postRequest('/unRelation',data).then(body=>{
             body.json().then(
                 json =>{
