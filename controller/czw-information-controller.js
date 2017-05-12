@@ -157,7 +157,7 @@ module.exports = {
     },
     binding:function *(next){
         var data = this.request.body;
-        var url = server + '/httpserver.member.Login/login3?username='+data.username+'&real_name='+data.realName+'&tel='+data.tel+'&zhiwei='+data.select+'&email='+data.email+'&WXFBSESSIONID=' + data.WXFBSESSIONID;
+        var url = server + '/httpserver.member.Login/login3?username='+data.username+'&real_name='+encodeURIComponent(data.realName)+'&tel='+data.tel+'&zhiwei='+data.select+'&email='+data.email+'&WXFBSESSIONID=' + data.WXFBSESSIONID;
         var result = yield postFetch(url).then(
             body =>{
                 return body;
@@ -212,7 +212,7 @@ module.exports = {
             fs.renameSync(oldPath, newPath)
         }else{
             fs.unlinkSync(newPath);
-            var newPath = '/app/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
+            var newPath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
             fs.renameSync(oldPath, newPath)
         }
         this.body={status:'1'};

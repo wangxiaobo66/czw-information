@@ -27,12 +27,13 @@ class Companyinfo extends React.Component {
             text: '',
             hide: true,
             zzFlag:'',
+            click:true,
             WXFBSESSIONID:''
         }
     }
 
     render() {
-        let {idType, companyName, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide,zzFlag} = this.state;
+        let {idType, companyName, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide,zzFlag,click} = this.state;
         return (
             <div className="module-companyinfo">
                 <div className="Company">
@@ -65,7 +66,8 @@ class Companyinfo extends React.Component {
                                     <span className="red">*</span><span className="item">公告扫描件（加盖公章）</span>
                                     <div className="btn btn-small" >
                                         <input type="file" className="upload" name="ggsmj"
-                                           onChange={(e) => this.imageUpload(e)}/>
+                                               accept="image/jpeg,image/jpg"
+                                               onChange={(e) => this.imageUpload(e)}/>
                                     </div>
                                 </div>
                             </div>
@@ -75,6 +77,7 @@ class Companyinfo extends React.Component {
                                     <span>统一社会信用代码</span><span className="ph">工商营业执照、组织机构代码证和税务登记证三证合为一证</span>
                                     <input id="switchCP" className="switch-cp__input switchbox" type="checkbox"
                                            checked={isThree == 0 ? "checked" : ""}
+                                           accept="image/jpeg,image/jpg"
                                            onChange={(e) => this.isThreeChange(e)}/>
                                 </div>
                                 {
@@ -84,13 +87,15 @@ class Companyinfo extends React.Component {
                                                 <span className="red">*</span><span className="item">工商营业执照</span>
                                                 <div className="btn btn-small" >
                                                     <input type="file" className="upload" name="gszz"
-                                                       onChange={(e) => this.imageUpload(e)}/>
+                                                           accept="image/jpeg,image/jpg"
+                                                           onChange={(e) => this.imageUpload(e)}/>
                                                 </div>
                                             </div>
                                             <div className={"list" + (swdjz == "" ? " un-load" : " in-load")}>
                                                 <span className="red">*</span><span className="item">税务登记证</span>
                                                 <div className="btn btn-small" >
                                                 <input type="file" className="upload" name="swdjz"
+                                                       accept="image/jpeg,image/jpg"
                                                        onChange={(e) => this.imageUpload(e)}/>
                                                 </div>
                                             </div>
@@ -98,6 +103,7 @@ class Companyinfo extends React.Component {
                                                 <span className="red">*</span><span className="item">组织机构代码</span>
                                                 <div className="btn btn-small" >
                                                 <input type="file" className="upload" name="zzjgdmz"
+                                                       accept="image/jpeg,image/jpg"
                                                        onChange={(e) => this.imageUpload(e)}/>
                                                 </div>
                                             </div>
@@ -105,6 +111,7 @@ class Companyinfo extends React.Component {
                                                 <span className="red">*</span><span className="item">代理资质</span>
                                                 <div className="btn btn-small" >
                                                 <input type="file" className="upload" name="dlzz"
+                                                       accept="image/jpeg,image/jpg"
                                                        onChange={(e) => this.imageUpload(e)}/>
                                                 </div>
                                             </div>
@@ -114,6 +121,7 @@ class Companyinfo extends React.Component {
                                             <span className="red">*</span><span className="item">工商营业执照</span>
                                             <div className="btn btn-small" >
                                             <input type="file" className="upload" name="code"
+                                                   accept="image/jpeg,image/jpg"
                                                    onChange={(e) => this.imageUpload(e)}/>
                                             </div>
                                         </div>
@@ -299,7 +307,7 @@ class Companyinfo extends React.Component {
     }
     //点击提交
     click(e){
-        let {idType, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide,WXFBSESSIONID} = this.state;
+        let {idType, isThree, zzjgdmz, gszz, dlzz, swdjz, ggsmj, code, text, hide,WXFBSESSIONID,click} = this.state;
         /*
          //004 is_three        bigint(11) NOT NULL DEFAULT '0',   0-表示三证合一  1-表示三证不合一
          //005 code            varchar(200) NULL 三证合一代码
@@ -338,13 +346,31 @@ class Companyinfo extends React.Component {
                     })
                 }
                 if(dlzz!=""&&zzjgdmz!=""&&swdjz!=""&&gszz!=""){
-                    data = {"WXFBSESSIONID":WXFBSESSIONID,"id_type":idType,"is_three":isThree,"code":"","yyzz":gszz+".jpg","zzjgdmz":zzjgdmz+".jpg","swdjz":swdjz+".jpg","daili_zz":dlzz+".jpg","first_info":""};
-                    util.postRequest('/upload',data).then(body => {
-                        body.json().then(
-                            json => {
-                                console.log(json)
-                            })
-                    })
+                    if(click==true){
+                        this.setState({
+                            click:false
+                        });
+                        data = {"WXFBSESSIONID":WXFBSESSIONID,"id_type":idType,"is_three":isThree,"code":"","yyzz":gszz+".jpg","zzjgdmz":zzjgdmz+".jpg","swdjz":swdjz+".jpg","daili_zz":dlzz+".jpg","first_info":""};
+                        util.postRequest('/upload',data).then(body => {
+                            body.json().then(
+                                json => {
+                                    if(json.status==1){
+                                        this.setState({
+                                            text:'提交成功',
+                                            hide:false,
+                                            click:true
+                                        })
+                                    }else{
+                                        this.setState({
+                                            text:'网络异常，请稍后再试',
+                                            hide:false,
+                                            click:true
+                                        })
+                                    }
+                                })
+                        })
+                    }
+
                 }
             }else{//非三证合一
                 if(code==""){
@@ -353,13 +379,40 @@ class Companyinfo extends React.Component {
                         hide:false
                     })
                 }else{
-                    data = {"WXFBSESSIONID":WXFBSESSIONID,"id_type":idType,"is_three":isThree,"code":code+".jpg","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":""};
-                    util.postRequest('/upload',data).then(body => {
-                        body.json().then(
-                            json => {
-                                console.log(json)
-                            })
-                    })
+                    if(click==true) {
+                        this.setState({
+                            click: false
+                        });
+                        data = {
+                            "WXFBSESSIONID": WXFBSESSIONID,
+                            "id_type": idType,
+                            "is_three": isThree,
+                            "code": code + ".jpg",
+                            "yyzz": "",
+                            "zzjgdmz": "",
+                            "swdjz": "",
+                            "daili_zz": "",
+                            "first_info": ""
+                        };
+                        util.postRequest('/upload', data).then(body => {
+                            body.json().then(
+                                json => {
+                                    if (json.status == 1) {
+                                        this.setState({
+                                            text: '提交成功',
+                                            hide: false,
+                                            click:true
+                                        })
+                                    } else {
+                                        this.setState({
+                                            text: '网络异常，请稍后再试',
+                                            hide: false,
+                                            click:true
+                                        })
+                                    }
+                                })
+                        })
+                    }
                 }
             }
         }else{//招标业主
@@ -369,13 +422,40 @@ class Companyinfo extends React.Component {
                     hide:false
                 })
             }else{
-                data = {"WXFBSESSIONID":WXFBSESSIONID,"id_type":idType,"is_three":isThree,"code":"","yyzz":"","zzjgdmz":"","swdjz":"","daili_zz":"","first_info":ggsmj+".jpg"};
-                util.postRequest('/upload',data).then(body => {
-                    body.json().then(
-                        json => {
-                            console.log(json)
-                        })
-                })
+                if(click==true) {
+                    this.setState({
+                        click: false
+                    });
+                    data = {
+                        "WXFBSESSIONID": WXFBSESSIONID,
+                        "id_type": idType,
+                        "is_three": isThree,
+                        "code": "",
+                        "yyzz": "",
+                        "zzjgdmz": "",
+                        "swdjz": "",
+                        "daili_zz": "",
+                        "first_info": ggsmj + ".jpg"
+                    };
+                    util.postRequest('/upload', data).then(body => {
+                        body.json().then(
+                            json => {
+                                if (json.status == 1) {
+                                    this.setState({
+                                        text: '提交成功',
+                                        hide: false,
+                                        click:true
+                                    })
+                                } else {
+                                    this.setState({
+                                        text: '网络异常，请稍后再试',
+                                        hide: false,
+                                        click:true
+                                    })
+                                }
+                            })
+                    })
+                }
             }
         }
     }

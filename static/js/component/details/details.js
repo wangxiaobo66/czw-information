@@ -38,7 +38,7 @@ export class Details extends React.Component {
                 <div className="flex-row-around">
                     <div className="btn btn-y" name="details" id={details.id} onClick={(e) => this.click(e)}>查看</div>
                     {
-                        details.ok_status==0?
+                        details.ok_status!=200?
                             <div className="btn btn-w" name="delete" id={details.id} onClick={(e) => this.click(e)}>删除</div>
                             :
                                 details.type != 2000?
