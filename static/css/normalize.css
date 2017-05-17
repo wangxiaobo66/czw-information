@@ -10,10 +10,12 @@
  *    IE on Windows Phone and in iOS.
  */
 *{
-    -webkit-touch-callout:none; 
+    -webkit-touch-callout:none;
+  /*
     -webkit-user-select:none; 
     -moz-user-select:none;
     user-select:none;
+    */
 }
 html {
   font-family: sans-serif; /* 1 */
