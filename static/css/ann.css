@@ -49,5 +49,50 @@ body,html {
 	box-shadow:0 0 0 0.0533333333rem red;
 }
 .abiaoqian {
-	color:#ffc600;
+	color: blue;
+	text-decoration: underline;
+}
+
+.Anns h1 {
+	font-size: 0.4266666667rem;
+	padding: 0.4rem;
+	position: relative;
+	border-top: 8px solid #e6e6e6;
+}
+.Anns h1:first-of-type {
+	border-top: none;
+}
+.Anns h1:before {
+	content: "";
+	position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #999;
+    color: #999;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    z-index: 2;    
+}
+.anns-article {
+	color: #444;
+	font-size: 0.4rem;
+	padding: .4rem;
+}
+.anns-article p {
+	line-height: 1.25;
+	margin-bottom: .6rem;
+}
+.ann--a {
+	color: #ffc600;
+}
+.btn-yl {
+	display: inline-block;
+	background-color: #ffc600;
+	padding: .1rem .2rem;
+	border-radius: 10rem;
+	color: #999;
 }
