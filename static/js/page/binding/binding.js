@@ -36,7 +36,7 @@ class Binding extends React.Component {
                     </div>
                     <div className="icon-c">
                         <i className="iconfont icon--2"></i>
-                        <input className="input-under-line" type="text" name="tel" placeholder="手机号码" maxLength="11" value={tel} onChange={(e) => this.change(e)} onBlur={(e) => this.blur(e)}/>
+                        <input className="input-under-line" type="tel" name="tel" placeholder="手机号码" maxLength="11" value={tel} onChange={(e) => this.change(e)} onBlur={(e) => this.blur(e)}/>
                     </div>
                     <div className="icon-c">
                         <i className="iconfont icon--5"></i>

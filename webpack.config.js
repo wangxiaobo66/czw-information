@@ -13,6 +13,7 @@ module.exports = {
         'management': ['./static/js/page/management/management.js'],//信息管理
         'mine': ['./static/js/page/mine/mine.js'],//我的
         'binding': ['./static/js/page/binding/binding.js'],//微信绑定
+        'ann':['./static/js/page/ann/ann.js']
     },
     output: {
         //path: path.resolve(__dirname, 'dist'),

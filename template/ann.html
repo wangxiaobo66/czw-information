@@ -6,26 +6,19 @@
 	<meta http-equiv="X-UA-Compatible" content="Ie=edge,chrome=1">
 	<meta name="renderer" content="webkit">
 	<meta name="format-detection" content="telephone=no, address=no">
+	<script src="//cdn.bootcss.com/react/15.3.1/react.min.js"></script>
+	<script src="//cdn.bootcss.com/react/15.3.1/react-dom.min.js"></script>
+	<script src="//cdn.bootcss.com/redux/3.6.0/redux.min.js"></script>
+	<script src="//cdn.bootcss.com/react-redux/5.0.0-beta.1/react-redux.min.js"></script>
 	<title>采购与招标网信息发布</title>
 	<link rel="stylesheet" type="text/css" href="/css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="/css/ann.css">
 	<link rel="stylesheet" type="text/css" href="/css/iconfont.css">
+	<script type="text/javascript" src="/third/fetch.js"></script>
 	<script type="text/javascript" src="/third/flexible_css.js"></script>
 </head>
 <body>
-	<div class="Anns">
-		<h1>邮件发布</h1>
-		<div class="anns-article">
-			<p>未确认您的账户信息前请您<span class="ann--a">绑定邮箱</span></p>
-			<p>请将要发布的信息内容，以附件doc文档的形式发送至<span class="ann--a">bid@chinabidding.cn</span></p>
-			<p><span class="btn-yl">发送参考模板</span>至
-			<span>我的邮箱</span>文档格式注意事项</p>
-		</div>
-		<h1>表单发布</h1>
-		<div class="anns-article">
-			<p>登陆 https://www.chinabidding.cn</p>
-			<p>网上提交信息</p>
-		</div>
-	</div>
+	<div id="Ann"></div>
 </body>
+<script type="text/javascript" src="/js/ann.js"></script>
 </html>
