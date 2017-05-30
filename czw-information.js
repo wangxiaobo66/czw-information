@@ -48,7 +48,7 @@ router.post('/unLogin',koaBody,czwInformationController.unLogin);//解绑微信
 router.post('/tongJi',koaBody,czwInformationController.tongJi);//统计信息/httpserver.info.Info/tongji?WXFBSESSIONID=&time=   time -1 表示全部 0当月-自然月 1上一个月-自然月 2上上一个月自然月   12 ,往前数第12个自然月 没有其它值 默认为0 当月统计
 //统计接口 按月 招标 中标 采购   创建时间?  发布日期     1010 1020 2000
 router.post('/tongji2',koaBody,czwInformationController.tongji2);
-
+router.post('/setSendMobanEmail',koaBody,czwInformationController.setSendMobanEmail);//发送邮件模版接口
 
 app
     .use(router.routes())

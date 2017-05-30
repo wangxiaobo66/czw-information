@@ -366,6 +366,19 @@ module.exports = {
         }
         this.body = json
     },
+    setSendMobanEmail:function*(next){
+        var data = this.request.body;
+        var url = server+'/httpserver.member.Other/setSendMobanEmail?WXFBSESSIONID='+data.WXFBSESSIONID;
+        var result = yield postFetch(url).then(
+            body =>{
+                return body;
+            }
+        ).catch(function(error){
+            console.log(error)
+        });
+        var json = yield JSON.parse(result);
+        this.body = json;
+    }
 };
 /*
  /httpserver.info.Info/relationZbgs?WXFBSESSIONID=&id_zbgg=&id_zbgs=    参数一为原招标公告id  参数二为中标公告id  关联接口 用户直接填写被关联的id号查询

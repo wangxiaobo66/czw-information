@@ -37,6 +37,9 @@ class Ann extends React.Component {
             </div>
         )
     }
+    componentDidMount() {
+
+    }
     //弹框回调
     changeHide(e){
         if(e){
@@ -48,10 +51,83 @@ class Ann extends React.Component {
     }
     //点击发送模版
     click(e){
-        this.setState({
-            text:'开发中',
-            hide:false
-        })
+        let WXFBSESSIONID = util.localStorage('get','WXFBSESSIONID');
+        let _this = this;
+        console.log(WXFBSESSIONID,"**");
+        if(WXFBSESSIONID&&WXFBSESSIONID!="undefined"){
+            let data = {"WXFBSESSIONID":WXFBSESSIONID};
+                util.postRequest('/setSendMobanEmail',data).then(body=> {
+                    body.json().then(
+                        json => {
+                            if(json.status==1){
+                                _this.setState({
+                                    text:'邮件发送成功！',
+                                    hide:false
+                                })
+                            }else if(json.status==-9){
+                                _this.setState({
+                                    text:'已发送邮件，请注意查收',
+                                    hide:false
+                                })
+                            }else{
+                                _this.setState({
+                                    text:'您尚未登录绑定邮箱账号',
+                                    hide:false
+                                });
+                                setTimeout(function(){
+                                    window.location.href ="/login"
+                                },2000);
+
+                            }
+
+                        })
+                })
+        }else{
+            let theRequest = util.GetRequest();
+            let data = {"code":theRequest.code};
+            util.postRequest('/getWXFBSESSIONID',data).then(body=> {
+                body.json().then(
+                    json => {
+                        util.localStorage('set','WXFBSESSIONID',json.wxfbSession);
+                        let WXFBSESSIONID = json.wxfbSession;
+                        let data = {"WXFBSESSIONID":WXFBSESSIONID};
+                        util.postRequest('/getUserMine',data).then(body=> {
+                            body.json().then(
+                                json => {
+                                    if(json.status!=1){
+                                        _this.setState({
+                                            text:'您尚未登录绑定邮箱账号',
+                                            hide:true
+                                        });
+                                        setTimeout(function(){
+                                            window.location.href ="/login"
+                                        },2000);
+                                    }else{
+                                        util.postRequest('/setSendMobanEmail',data).then(body=> {
+                                            body.json().then(
+                                                json => {
+                                                    if(json.status==1){
+                                                        _this.setState({
+                                                            text:'邮件发送成功！',
+                                                            hide:false
+                                                        })
+                                                    }else{
+                                                        _this.setState({
+                                                            text:'您尚未登录绑定邮箱账号',
+                                                            hide:false
+                                                        });
+                                                        setTimeout(function(){
+                                                            window.location.href ="/login"
+                                                        },2000);
+                                                    }
+                                                })
+                                        })
+                                    }
+                                })
+                        })
+                    })
+            })
+        }
     }
 }
 render(

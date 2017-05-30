@@ -68,9 +68,24 @@ class Binding extends React.Component {
     }
     //弹框回调
     changeHide(e){
-        let{text} = this.state;
+        let {text,WXFBSESSIONID} = this.state;
+        let _this = this;
         if(text == "绑定成功"){
-            window.location.href = "/mine"
+            let data = {"WXFBSESSIONID":WXFBSESSIONID};
+            util.postRequest('/setSendMobanEmail',data).then(body=> {
+                body.json().then(
+                    json => {
+                        if(json.status==1){
+                            _this.setState({
+                                text:'模版邮件发送成功！',
+                                hide:false
+                            });
+                            setTimeout(function(){
+                                window.location.href ="/mine"
+                            },2000);
+                        }
+                    })
+            })
         }
         if(e){
             this.setState({
