@@ -52,7 +52,7 @@ gulp.task('rev',function(){
     'use strict';
     gulp.src(['dist/js/*'])
         .pipe(rev())
-        .pipe(gulp.dest('dist/js/'))//.pipe管道,流的形式输出输入
+        .pipe(gulp.dest('dist/js/'))
         .pipe(rev.manifest())
         .pipe(gulp.dest('./controller/'))
 

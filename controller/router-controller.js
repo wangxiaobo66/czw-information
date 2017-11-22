@@ -28,5 +28,11 @@ module.exports = {
     },
     announce: function *(next){
         this.body = yield  render('../dist/template/ann.html');
+    },
+    ios: function *(next){
+        this.body = yield  render('../dist/template/ios.html');
+    },
+    android: function *(next){
+        this.body = yield  render('../dist/template/android.html');
     }
 };

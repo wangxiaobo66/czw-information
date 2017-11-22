@@ -1,0 +1,9 @@
+* {margin: 0;padding: 0;}
+section {padding: 20px 16.6667vw;text-align: center;border-bottom: 1px solid #f1f1f1;}
+section:first-of-type {font-size: 14px;border-bottom: 4px solid #f1f1f1;padding: 10px 0}
+section>h1 {color: #ffb400;font-size: 18px;}
+section .explain:after {content: "";position: absolute;left: 50%;bottom: -8px;width: 50px;height: 1px;margin-left: -25px;background-color: #ffb400}
+section .explain {font-size: 12px;padding: 4px 0 5px 0;position: relative;}
+section>img {width: 100%;margin-top: 20px}
+section:last-of-type {border-bottom: none;}
+.tip {font-size: 14px;color: #666666;padding: 5px 0 30px 0}

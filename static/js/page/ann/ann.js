@@ -25,8 +25,9 @@ class Ann extends React.Component {
                     <p>1.发送前请您先<span className="ann--a">绑定邮箱</span>用于确认您的账户信息</p>
                     <p>2.请将要发布的信息内容，以附件doc文档的形式进行发送</p>
                     <p>3.请将信息发布至邮箱<span className="ann--a">zhaobiaofabu@chinabidding.cn</span></p>
-                    <p>4.您可以点击<span className="btn-yl" onClick={(e) => this.click(e)}>发送参考模板</span>至
-                        <span className="ann--a">我的邮箱</span>查看模板</p>
+                    <p>4.您可以通过操作手册查看发送步骤:</p>
+                    <p>IOS客户端用户点击<span className="ann--a"><a href="/ios">IOS端用户操作手册</a></span></p>
+                    <p>Android客户端用户点击<span className="ann--a"><a href="/android">Android端用户操作手册</a></span></p>
                 </div>
                 <h1>表单发布</h1>
                 <div className="anns-article">
