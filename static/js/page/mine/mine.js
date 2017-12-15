@@ -14,6 +14,7 @@ class Mine extends React.Component {
         super(props);
         this.state = {
             name:'',
+            f_name:'',
             headImgUrl:'',
             yifabu:'',
             nofabu:'',
@@ -21,13 +22,16 @@ class Mine extends React.Component {
             textPro:'',
             hidePro:true,
             text:'',
+            zzFlag:'',
             hide:true,
             WXFBSESSIONID:''
         }
     }
-
+    componentWillMount(){
+        //渲染前
+    }
     render() {
-        let {name,headImgUrl,yifabu,nofabu,all,textPro,hidePro,text,hide} = this.state;
+        let {name,f_name,headImgUrl,yifabu,nofabu,all,textPro,hidePro,text,hide,zzFlag} = this.state;
         return (
             <div className="module-mine">
                 <div className="Mine">
@@ -37,12 +41,20 @@ class Mine extends React.Component {
                         </div>
                         <div className="user-info">
                             <p className="user-name">{name}</p>
+                            <p className="father-name">{f_name}</p>
                             <span className="account-integral">账户积分：</span><span className="y">0</span>
                         </div>
                         <a className="btn btn-small" onClick={(e) => this.unLogin(e)}>解绑微信</a>
                     </div>
                     <a className="company-info" href="/companyinfo">
                         <span>企业信息 | 资质认证</span>
+                        {
+                            zzFlag==''?<span className="un-id">(未认证)</span>
+                                :
+                                zzFlag=="F"?
+                                    <span className="un-id">(未认证)</span>
+                                    :<span className="un-id">(已认证)</span>
+                        }
                         <span className="arrow"></span>
                     </a>
                     <table className="release-table">
@@ -84,11 +96,20 @@ class Mine extends React.Component {
         )
     }
     componentDidMount() {
+        //应该写在渲染前,下次注意
         let WXFBSESSIONID = util.localStorage('get','WXFBSESSIONID');
         console.log(WXFBSESSIONID,"**");
         let _this = this;
         if(WXFBSESSIONID&&WXFBSESSIONID!="undefined"){
             let data = {"WXFBSESSIONID":WXFBSESSIONID};
+            util.postRequest('/getState',data).then(body => {
+                body.json().then(
+                    json => {
+                        _this.setState({
+                            zzFlag:json.zzFlag
+                        });
+                    })
+            });
             util.postRequest('/getUserMine',data).then(body=>{
                 body.json().then(
                     json =>{
@@ -101,6 +122,7 @@ class Mine extends React.Component {
                             _this.setState({
                                 name:json.wx_nickname,
                                 headImgUrl:json.wx_headimgurl,
+                                f_name:json.f_username,
                                 WXFBSESSIONID:WXFBSESSIONID
                             });
                             _this.allTongJi(WXFBSESSIONID);

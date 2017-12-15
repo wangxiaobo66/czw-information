@@ -16,6 +16,57 @@ class Ann extends React.Component {
             WXFBSESSIONID: ''
         }
     }
+    componentWillMount(){
+        //渲染前
+        //判断是否已经登陆绑定
+        let WXFBSESSIONID = util.localStorage('get','WXFBSESSIONID');
+        let _this = this;
+        console.log(WXFBSESSIONID,"**");
+        if(WXFBSESSIONID&&WXFBSESSIONID!="undefined"){
+            let data = {"WXFBSESSIONID":WXFBSESSIONID};
+            util.postRequest('/getUserMine',data).then(body=> {
+                body.json().then(
+                    json => {
+                        if(json.status!=1){
+                            _this.setState({
+                                WXFBSESSIONID:WXFBSESSIONID,
+                                text:'您尚未登录绑定邮箱账号',
+                                hide:true
+                            });
+                            setTimeout(function(){
+                                window.location.href ="/login"
+                            },2000);
+                        }
+                    })
+            })
+        }else{
+            let theRequest = util.GetRequest();
+            let data = {"code":theRequest.code};
+            util.postRequest('/getWXFBSESSIONID',data).then(body=> {
+                body.json().then(
+                    json => {
+                        util.localStorage('set','WXFBSESSIONID',json.wxfbSession);
+                        let WXFBSESSIONID = json.wxfbSession;
+                        let data = {"WXFBSESSIONID":WXFBSESSIONID};
+                        util.postRequest('/getUserMine',data).then(body=> {
+                            body.json().then(
+                                json => {
+                                    if(json.status!=1){
+                                        _this.setState({
+                                            text:'您尚未登录绑定邮箱账号',
+                                            hide:true
+                                        });
+                                        setTimeout(function(){
+                                            window.location.href ="/login"
+                                        },2000);
+                                    }
+                                })
+                        })
+                    })
+            })
+        }
+
+    }
     render() {
         let {text, hide} = this.state;
         return (
@@ -24,10 +75,12 @@ class Ann extends React.Component {
                 <div className="anns-article">
                     <p>1.发送前请您先<span className="ann--a">绑定邮箱</span>用于确认您的账户信息</p>
                     <p>2.请将要发布的信息内容，以附件doc文档的形式进行发送</p>
-                    <p>3.请将信息发布至邮箱<span className="ann--a">zhaobiaofabu@chinabidding.cn</span></p>
-                    <p>4.您可以通过操作手册查看发送步骤:</p>
-                    <p>IOS客户端用户点击<span className="ann--a"><a href="/ios">IOS端用户操作手册</a></span></p>
-                    <p>Android客户端用户点击<span className="ann--a"><a href="/android">Android端用户操作手册</a></span></p>
+                    <p>3.您可以点击<span className="btn-yl" onClick={(e) => this.click(e)}>发送参考模板</span>至
+                        <span className="ann--a">我的邮箱</span>查看模板</p>
+                    <p>4.请将信息发布至邮箱<span className="ann--a"><a href="mailto:zhaobiaofabu@chinabidding.cn">zhaobiaofabu@chinabidding.cn</a></span></p>
+                    <p>5.您可以通过操作手册查看发送步骤:</p>
+                    <p>IOS客户端用户点击<span className="ann--a" onClick={(e) => this.clickIos(e)}>IOS端用户操作手册</span></p>
+                    <p>Android客户端用户点击<span className="ann--a" onClick={(e) => this.clickAndroid(e)}>Android端用户操作手册</span></p>
                 </div>
                 <h1>表单发布</h1>
                 <div className="anns-article">
@@ -40,6 +93,13 @@ class Ann extends React.Component {
     }
     componentDidMount() {
 
+    }
+    //点击跳转
+    clickIos(e){
+        window.location.href = '/ios';
+    }
+    clickAndroid(e){
+        window.location.href = '/android';
     }
     //弹框回调
     changeHide(e){

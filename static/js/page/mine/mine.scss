@@ -37,7 +37,12 @@
   }
   .user-info .user-name {
     font-size: 0.4266666667rem;
-    padding: 0.2rem 0;
+    padding: 0.1rem 0 0 0;
+  }
+  .user-info .father-name{
+    font-size: 0.38rem;
+    padding: 0.1rem 0;
+    color:#ffc600;
   }
   .user-info .account-integral {
     color: #999;
@@ -110,5 +115,11 @@
     border-left: 1px solid #d9d9d9;
     border-right: 1px solid #d9d9d9;
     color: #999;
+  }
+  .un-id{
+    color: #ff0000;
+    position: absolute;
+    right: 1rem;
+    margin-left: .1rem;
   }
 }
