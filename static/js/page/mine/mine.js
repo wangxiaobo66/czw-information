@@ -106,7 +106,7 @@ class Mine extends React.Component {
                 body.json().then(
                     json => {
                         _this.setState({
-                            zzFlag:json.zzFlag
+                            zzFlag:json.zz_flag
                         });
                     })
             });

@@ -34,5 +34,8 @@ module.exports = {
     },
     android: function *(next){
         this.body = yield  render('../dist/template/android.html');
+    },
+    faq: function *(next){
+        this.body = yield render('../dist/template/faq.html');
     }
 };

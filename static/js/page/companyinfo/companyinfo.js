@@ -155,7 +155,7 @@ class Companyinfo extends React.Component {
                     _this.setState({
                         companyName:json.company_name,
                         fId:json.f_id,
-                        zzFlag:json.zzFlag
+                        zzFlag:json.zz_flag
                     });
                     if(json.zz_id!=null){//有数据 已经上传
                         if(json.id_type==1){//招标代理

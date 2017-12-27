@@ -24,6 +24,7 @@ router.get('/binding',routerController.binding);//微信绑定
 router.get('/announce',routerController.announce);//信息发布导视
 router.get('/ios',routerController.ios);//ios
 router.get('/android',routerController.android);//android
+router.get('/faq',routerController.faq);//faq
 
 //接口配置
 //测试

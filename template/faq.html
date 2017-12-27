@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="Ie=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no, address=no">
+    <title>常见问题</title>
+    <link rel="stylesheet" type="text/css" href="/css/faq.css">
+    <script type="text/javascript" src="/third/jquery.min.js"></script>
+</head>
+<body>
+    <div id="Faq" class="faq">
+        <div class="">
+            <p class="faq-title">关于帐号绑定</p>
+            <ul class="faq-ul hide">
+                <li>
+                    <p>1.进入【采购与招标网信息发布】公众号内</p>
+                    <img src="../img/faq1-1.png"/>
+                </li>
+                <li>
+                    <p>2.点击【我的帐号】</p>
+                    <img src="../img/faq1-2.png"/>
+                </li>
+                <li>
+                    <p>3.进入到绑定微信页面,点击【立即注册】</p>
+                    <img src="../img/faq1-3.png"/>
+                </li>
+                <li>
+                    <p>4.填写信息,完成注册</p>
+                    <img src="../img/faq1-4.png"/>
+                </li>
+                <li>
+                    <p>5.注册成功后可填写信息,完成绑定微信</p>
+                    <img src="../img/faq1-5.png"/>
+                </li>
+                <li>
+                    <p>6.绑定成功后再次进入【我的账号】,此时可以看到微信信息</p>
+                    <img src="../img/faq1-6.png"/>
+                </li>
+                <li>
+                    <p>7.若需要解绑微信,可点击【解绑微信】进行解绑</p>
+                    <img src="../img/faq1-7.png"/>
+                </li>
+                <li>
+                    <p>8.点击确定,完成解绑;点击取消,可取消当前操作</p>
+                    <img src="../img/faq1-8.png"/>
+                </li>
+                <li>
+                    <p>9.若想再次绑定微信可重复以上操作</p>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <p class="faq-title">如何绑定邮件</p>
+            <ul class="faq-ul hide">
+                <li>
+                    <p>1.进入【采购与招标网信息发布】公众号内</p>
+                    <img src="../img/faq2-1.png"/>
+                </li>
+                <li>
+                    <p>2.点击【我的账号】</p>
+                    <img src="../img/faq2-2.png"/>
+                </li>
+                <li>
+                    <p>3.进入到绑定微信页面,点击【立即注册】</p>
+                    <img src="../img/faq2-3.png"/>
+                </li>
+                <li>
+                    <p>4.填写注册信息,其中邮箱信息即用来发布信息</p>
+                    <p class="warning">注意:绑定后请用此处填写的邮箱进行信息发布,若用其他邮箱系统将无法识别,这点请特别注意!</p>
+                    <img src="../img/faq2-4.png"/>
+                </li>
+                <li>
+                    <p>5.点击确定后完成注册和邮箱绑定</p>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <p class="faq-title">微信公众号信息发布流程</p>
+            <ul class="faq-ul hide">
+                <li>
+                    <p>邮箱发布:</p>
+                    <p class="faq-p">1.请您先进行账号注册</p>
+                    <p class="faq-p">2.注册完毕后,请绑定邮箱用于确认您的账户信息</p>
+                    <p class="faq-p">3.请将要发布的信息内容,以附件doc文档的形式发送到下面的邮箱</p>
+                    <p class="faq-p">4.请将信息发布至邮箱<span>zhaobiaofabu@chinabidding.cn</span></p>
+                    <p class="faq-p">5.发布信息的格式如下:</p>
+                    <img src="../img/faq3-1.png"/>
+                </li>
+                <li>
+                    <p>表单发布:</p>
+                    <p class="faq-p">1.请您先登录网站<a href="https://www.chinabidding.cn">https://www.chinabidding.cn</a></p>
+                    <p class="faq-p">2.请您在网站内提交信息进行发布</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    $(function(){
+        $('.faq-title').on('click',function(){
+            if($(this).hasClass('curr')){
+                $(this).removeClass('curr');
+                $(this).next('ul').addClass('hide');
+            }else{
+                $('.faq-title').removeClass('curr');
+                $('.faq-ul').addClass('hide');
+                $(this).addClass('curr');
+                $(this).next('ul').removeClass('hide');
+            }
+        })
+    })
+</script>
+</html>
