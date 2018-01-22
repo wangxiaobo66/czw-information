@@ -203,8 +203,8 @@ module.exports = {
         var attrs = attr[0].split('_');
         var oldPath = file.files[attr[0]].path;
 
-        var filePath = '/app/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/';
-        var newPath = '/app/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
+        var filePath = '/data/service/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/';
+        var newPath = '/data/service/data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
         createFolder(newPath);
 
         var Attrs = fs.readdirSync(filePath);
@@ -212,7 +212,7 @@ module.exports = {
             fs.renameSync(oldPath, newPath)
         }else{
             fs.unlinkSync(newPath);
-            var newPath = '../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
+            var newPath = '../../data/file/company/zz/'+attrs[0]+'/'+attrs[1]+'/'+attrs[1]+'.jpg';
             fs.renameSync(oldPath, newPath)
         }
         this.body={status:'1'};

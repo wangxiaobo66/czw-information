@@ -16,11 +16,11 @@ const webpackConfig = require('./webpack.config.js');
 //图片路径
 const imgPath = '/data/upload';
 /*向服务器提交*/
-var host = '139.198.1.219',
-    username = 'misoar',
-    password = 'vYwme_kitjpiqmqrclemc6kqccSysn1k',
-    dest = '/app/czw-information',
-    port = 22004;
+var host = '39.107.107.129',
+    username = 'ops',
+    password = '94gcumhvfpkmJtdMifptelrwz&nlofao',
+    dest = '/data/service/czw-information',
+    port = 22001;
 /**/
 gulp.task('distJs',['clean'], function () {
     'use strict';
